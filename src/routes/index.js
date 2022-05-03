@@ -1,12 +1,7 @@
 import styles from './Routes.module.scss'
-import TodoList from './TodoList'
 
 function App() {
-  return (
-    <div className={styles.app}>
-      <TodoList />
-    </div>
-  )
+  return <div className={styles.app}>todo</div>
 }
 
 export default App
