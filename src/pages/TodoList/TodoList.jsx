@@ -99,7 +99,10 @@ function TodoList() {
                   onBlur={() => editFocusOutHandler(todo)}
                 />
               ) : (
-                <p className={styles.taskContent}>{todo.content}</p>
+                <div className={styles.doneContainer}>
+                  <p className={styles.taskContent}>{todo.content}</p>
+                  {todo.done ? <div className={styles.todoDone} /> : null}
+                </div>
               )}
             </div>
             <div className={styles.wrap}>

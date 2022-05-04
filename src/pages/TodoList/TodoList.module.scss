@@ -54,8 +54,18 @@
         border: 1px solid colors.$GRAYE;
       }
 
-      .taskContent {
-        margin-left: 10px;
+      .doneContainer {
+        @include position.relative(0);
+
+        .taskContent {
+          margin-left: 10px;
+        }
+
+        .todoDone {
+          width: 90%;
+          border: 1px solid colors.$GRAY6;
+          @include position.absolute(50% 0 auto auto);
+        }
       }
 
       .editIcon {
