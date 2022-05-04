@@ -1,2 +1,196 @@
-.test {
+/* main */
+
+.wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  padding: 40px 30px;
+  width: 320px;
+  height: 640px;
+  background-color: rgb(242, 246, 255);
+  border-radius: 40px;
+  overflow: hidden;
+}
+.nav a { cursor: pointer; }
+.rightNav {
+  display: flex;
+  column-gap: 25px;
+}
+.icon {
+  width: 16px;
+  fill: #888;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #444;
+}
+.subTitle {
+  margin-bottom: 15px;
+  font-size: 10px;
+  color: #aaa;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.listWrap {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+.listWrap li {
+  display: flex;
+  column-gap: 12px;
+  padding: 15px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px rgba(177, 177, 177, 0.2);
+}
+.listWrap li input {
+  cursor: pointer;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.listWrap .checkbox:checked {
+  background-color: #ddd;
+  border: 2px solid #ddd;
+}
+.checked {
+  position: absolute;
+  display: none;
+  width: 20px;
+  color: #fff;
+  pointer-events: none;
+}
+.listWrap .checkbox:checked ~ .checked { display: block; }
+.listWrap .checkbox:checked ~ p { text-decoration: line-through; }
+.listWrap li:nth-child(odd) input { border-color: rgb(214, 0, 214); }  
+.listWrap li:nth-child(even) input { border-color: rgb(8, 97, 185); }
+.listWrap li p {
+  line-height: 20px;
+  font-size: 14px;
+  color: #333;
+  letter-spacing: 0.1px;
+}
+.buttonWrap {
+  position: absolute;
+  bottom: 40px;
+  right: 30px;
+}
+.addCategoryBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(43, 89, 255);
+  box-shadow: 2px 2px 10px rgba(13, 49, 180, 0.4);
+}
+.plusIcon {
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  left: 17px;
+  width: 16px;
+  fill: rgba(255, 255, 255, 0.782);
+}
+
+/* AddList */
+.addCloseBtnWrap {
+  position: relative;
+  display: flex;
+  justify-content: end;
+}
+.addCloseBtnWrap button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+.closeBtn {
+  position: absolute;
+  top: 11px;
+  right: 14px;
+  width: 12px;
+  fill: #555;
+}
+.addIcon {
+  width: 20px;
+  fill: #999;
+}
+.toDoInput {
+  margin: 120px 0 20px;
+  padding: 20px 0;
+  width: 100%;
+  font-size: 20px;
+}
+.toDoInput::placeholder {
+  color: #aaa;
+}
+.addInputWrap {
+  display: flex;
+  column-gap: 10px;
+}
+input[type="date"] {
+  padding: 0 15px;
+  width: 100px;
+  height: 50px;
+  border-radius: 50px;
+  border: 2px solid #ddd;
+  font-size: 15px;
+  font-weight: 600;
+  color: #999;
+}
+input[type="date"]::before {
+  content: attr(placeholder);
+  width: 100%;
+}
+input[type="radio"] {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 2px solid #ddd;
+}
+input[type="radio"]:checked {
+  padding: 20px;
+  fill: blue;
+}
+.addOptionWrap {
+  margin: 80px 0 114px;
+  display: flex;
+  justify-content: center;
+  column-gap: 50px;
+}
+.addOptionWrap li a {
+  cursor: pointer;
+}
+.addBtnWrap {
+  position: relative;
+  display: flex;
+  justify-content: end;
+}
+.addBtnWrap button {
+  padding-right: 30px;
+  width: 150px;
+  height: 50px;
+  background-color: rgb(43, 89, 255);
+  box-shadow: 2px 2px 10px rgba(13, 49, 180, 0.4);
+  border-radius: 50px;
+  letter-spacing: 0.2px;
+  font-weight: 600;
+  color: #ddd;
+}
+.upIcon {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  width: 12px;
+  fill: #ddd;
 }

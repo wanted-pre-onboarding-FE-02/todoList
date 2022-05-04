@@ -1,4 +1,3 @@
-import { LogoImage } from './assets/svgs'
 import './App.scss'
 
 function App() {
