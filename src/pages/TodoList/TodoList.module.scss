@@ -1,2 +1,83 @@
-.test {
+@use '../../styles//constants/colors';
+@use '../../styles//mixins/flexbox';
+@use '../../styles/mixins/position';
+
+.container {
+  position: relative;
+  width: 360px;
+  height: 720px;
+  padding: 50px 20px;
+  background-color: colors.$GRAYE;
+  border-radius: 50px;
+
+  .title {
+    margin: 20px 0;
+    font-size: 32px;
+    color: colors.$BIG_TITLE;
+  }
+
+  .todayTask {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: colors.$TASKS_TITLE;
+  }
+
+  .tasks {
+    display: flex;
+    @include flexbox.flexbox(between, center);
+    padding: 10px;
+    background-color: colors.$WHITE;
+    border-radius: 10px;
+
+    .wrap {
+      display: flex;
+      @include flexbox.flexbox(start, center);
+
+      .icon {
+        cursor: pointer;
+        background-color: aqua;
+        border: 2px solid colors.$TEAL;
+        border-radius: 50%;
+      }
+
+      .done {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        border: 2px solid colors.$TEAL;
+        border-radius: 50%;
+      }
+
+      .editInput {
+        width: 180px;
+        margin-left: 10px;
+      }
+
+      .taskContent {
+        margin-left: 10px;
+      }
+
+      .editIcon {
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .trashIcon {
+        cursor: pointer;
+      }
+    }
+
+    + .tasks {
+      margin-top: 10px;
+    }
+  }
+
+  .todoAddButton {
+    width: 40px;
+    height: 40px;
+    color: colors.$WHITE;
+    background-color: colors.$TEAL;
+    @include position.absolute(auto 20px 40px auto);
+    border-radius: 50%;
+  }
 }
