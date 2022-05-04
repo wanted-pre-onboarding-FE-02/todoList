@@ -17,7 +17,7 @@
   }
 
   .checkboxWrapper {
-    @include flexbox.flexbox(center center);
+    @include flexbox.flexbox(center, center);
     position: relative;
     width: 28px;
     height: 28px;
@@ -58,5 +58,27 @@
     color: colors.$TASK_ITEM_TITLE;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .done {
+    text-decoration: line-through;
+  }
+
+  .remove {
+    @include flexbox.flexbox(center, center);
+    width: 28px;
+    height: 28px;
+    margin-right: 24px;
+    margin-left: auto;
+
+    svg {
+      opacity: 0;
+      fill: colors.$GRAY6;
+      transition: 0.2s;
+    }
+  }
+
+  &:hover .remove svg {
+    opacity: 1;
   }
 }

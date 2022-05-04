@@ -2,26 +2,26 @@ import { useReducer, createContext, useContext, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 const initialTodos = [
-  {
-    id: 0,
-    title: 'Todo 완성하기1',
-    done: false,
-  },
-  {
-    id: 1,
-    title: 'Todo 완성하기2',
-    done: false,
-  },
-  {
-    id: 2,
-    title: 'Todo 완성하기3',
-    done: false,
-  },
-  {
-    id: 3,
-    title: 'Todo 완성하기4',
-    done: true,
-  },
+  // {
+  //   id: 0,
+  //   title: 'Todo 완성하기1',
+  //   done: false,
+  // },
+  // {
+  //   id: 1,
+  //   title: 'Todo 완성하기2',
+  //   done: false,
+  // },
+  // {
+  //   id: 2,
+  //   title: 'Todo 완성하기3',
+  //   done: false,
+  // },
+  // {
+  //   id: 3,
+  //   title: 'Todo 완성하기4',
+  //   done: true,
+  // },
 ]
 
 const todoReducer = (state, action) => {
