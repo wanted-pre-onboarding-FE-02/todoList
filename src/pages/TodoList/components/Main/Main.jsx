@@ -1,9 +1,6 @@
-import { useState } from 'react'
-
 import classes from './Main.module.scss'
 
 import TodoItem from '../List/TodoItem'
-import { ReactComponent as Check } from '../svgs/check.svg'
 
 const DUMMY_TODOS = [
   { id: 1, todo: 'Daily meeing with team', checked: false },
@@ -24,24 +21,9 @@ function Main() {
       <div className={classes.list}>
         <h2 className={classes.main__category}>Today&apos;s Tasks</h2>
         <ul className={classes.list__content}>
-          {
-            DUMMY_TODOS.map((item) => (
-              <TodoItem item={item} />
-            ))
-            /* {DUMMY_TODOS.map((item) => (
-            <li className={classes['list__content--item']}>
-              <button
-                type='button'
-                className={`${classes['list__content--checkbtn']} ${item.checked ? '' : classes['notChecked--btn']}`}
-              >
-                <Check />
-              </button>
-              <p className={`${classes['list__content--todo']} ${item.checked ? '' : classes['notChecked--text']}`}>
-                {item.todo}
-              </p>
-            </li>
-          ))} */
-          }
+          {DUMMY_TODOS.map((item) => (
+            <TodoItem item={item} />
+          ))}
         </ul>
       </div>
     </div>
