@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import classes from './Main.module.scss'
 
+import TodoItem from '../List/TodoItem'
 import { ReactComponent as Check } from '../svgs/check.svg'
 
 const DUMMY_TODOS = [
@@ -13,7 +14,6 @@ const DUMMY_TODOS = [
 ]
 
 function Main() {
-  const [checkedItems, setCheckedItems] = useState([])
   return (
     <div className={classes.main}>
       <h1 className={classes.main__title}>What&apos;s up, Joy!</h1>
@@ -24,7 +24,11 @@ function Main() {
       <div className={classes.list}>
         <h2 className={classes.main__category}>Today&apos;s Tasks</h2>
         <ul className={classes.list__content}>
-          {DUMMY_TODOS.map((item) => (
+          {
+            DUMMY_TODOS.map((item) => (
+              <TodoItem item={item} />
+            ))
+            /* {DUMMY_TODOS.map((item) => (
             <li className={classes['list__content--item']}>
               <button
                 type='button'
@@ -36,7 +40,8 @@ function Main() {
                 {item.todo}
               </p>
             </li>
-          ))}
+          ))} */
+          }
         </ul>
       </div>
     </div>
