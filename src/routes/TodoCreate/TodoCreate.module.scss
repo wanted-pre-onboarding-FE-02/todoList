@@ -1,0 +1,35 @@
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/levels';
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/mixins/position';
+
+.todoCreate {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .textWrapper {
+    @include position.middleBox;
+    width: 100%;
+
+    input[type='text'] {
+      width: 100%;
+      height: 30px;
+      margin-bottom: 80px;
+      font-size: 1.4rem;
+      line-height: 30px;
+      border-bottom: 1px solid colors.$BLACK;
+    }
+  }
+
+  button[type='button'] {
+    @include position.absolute(auto 0 40px auto);
+    width: 140px;
+    height: 50px;
+    line-height: 50px;
+    color: colors.$WHITE;
+    background-color: colors.$BLUE;
+    border-radius: 32px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 24%);
+  }
+}
