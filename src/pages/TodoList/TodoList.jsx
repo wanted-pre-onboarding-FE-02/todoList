@@ -1,8 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react'
 import styles from './TodoList.module.scss'
-import { PlusIcon, CheckIcon } from '../../assets/svgs/index'
+import { PlusIcon, CheckIcon, MenuIcon, SearchIcon } from '../../assets/svgs/index'
 import { cx } from '../../styles/index'
 
+const CATEGORY = ['work', 'exercise', 'study']
 const INITIAL_TODO = [
   {
     id: 1,
@@ -47,6 +48,7 @@ const INITIAL_TODO = [
 ]
 
 function TodoList() {
+  const nextId = useRef(9)
   const [todos, setTodos] = useState([...INITIAL_TODO])
   const [text, setText] = useState('')
 
@@ -55,24 +57,54 @@ function TodoList() {
     setTodos((todos) => todos.map((todo, index) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
   }, [])
 
-  const onChangeText = (e) => {
-    setText(e.currentTarget.value)
-  }
-
   const onRemoveTodo = (e) => {
     const DELETE_ID = parseInt(e.target.dataset.id, 10)
     setTodos((todos) => todos.filter((todo) => todo.id !== DELETE_ID))
   }
 
+  const onChangeText = (e) => {
+    setText(e.currentTarget.value)
+  }
+  const onAddTodo = () => {
+    if (text.trim() === '') return
+
+    const newTodo = {
+      content: text.trim(),
+      id: nextId.current,
+    }
+
+    setTodos(todos.concat(newTodo))
+    nextId.current += 1
+    setText('')
+  }
+
   return (
     <section className={styles.todoWrapper}>
-      <div className={styles.todoHeader}>
-        <h1>What&#39;s up, Joy</h1>
-      </div>
-      <div className='todoContent'>
+      <header className={styles.todoHeader}>
+        <div className={styles.headerBtns}>
+          <button type='button'>
+            <MenuIcon />
+          </button>
+          <div>
+            <button type='button'>
+              <SearchIcon />
+            </button>
+          </div>
+        </div>
+        <h1>Hello, Stranger</h1>
+      </header>
+      <main className={styles.todoContent}>
+        <div className={styles.categoryList}>
+          <h3>category</h3>
+          <ul className={styles.categoryInner}>
+            {CATEGORY.map((cate, index) => {
+              return <li key={`category-${cate}`}>{cate}</li>
+            })}
+          </ul>
+        </div>
+
         <div className={styles.todoList}>
-          <input type='text' value={text} onChange={onChangeText} />
-          <h3 className={styles.todoTitle}>Today&#39;s tasks</h3>
+          <h3>Today&#39;s tasks</h3>
 
           <ul className={styles.todoInner}>
             {todos.map((todo, index) => {
@@ -84,17 +116,17 @@ function TodoList() {
                     <p>{todo.content}</p>
                   </div>
                   <button type='button' className={styles.todoDeleteBtn} data-id={todo.id} onClick={onRemoveTodo}>
-                    X
+                    x
                   </button>
                 </li>
               )
             })}
           </ul>
         </div>
-        <button type='button' className={styles.todoAddBtn} aria-label='Add Todo Button'>
+        <button type='button' className={styles.todoAddBtn} aria-label='Add Todo Button' onClick={onAddTodo}>
           <PlusIcon />
         </button>
-      </div>
+      </main>
     </section>
   )
 }
