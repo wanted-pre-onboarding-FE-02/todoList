@@ -1,7 +1,7 @@
 import styles from './TodoList.module.scss'
 import { CheckIcon, EditIcon } from '../../assets/svgs'
 import { useEffect, useRef, useState } from 'react'
-import TodoAddModal from '../../components/Modal/TodoAddModal'
+import TodoAddModal from '../../components/common/Modal/TodoAddModal'
 
 function TodoList() {
   const TODO_ITEM = [
@@ -28,7 +28,16 @@ function TodoList() {
   const [showModal, setShowModal] = useState(false)
   const closeRef = useRef()
 
-  const addTodoHandler = () => {
+  const createTodoHanlder = (todoText) => {
+    setTodoValue(todoText)
+  }
+
+  const createTodoListHandler = () => {
+    setTodoList([...todoList, { id: Date.now(), title: todoValue, done: false }])
+    setShowModal(false)
+  }
+
+  const showModalHandler = () => {
     setShowModal(true)
   }
 
@@ -54,9 +63,8 @@ function TodoList() {
     }
   }, [closeRef])
 
-  console.log(showModal)
   return (
-    <section className={`${styles.todoList} ${showModal ? styles.on : ''}`} ref={closeRef}>
+    <section className={`${styles.todoList} ${showModal ? styles.on : ''}`}>
       <h1>What&apos; s up, Joy!</h1>
       <p className={styles.categories}>CATEGORIES</p>
 
@@ -85,8 +93,12 @@ function TodoList() {
         ))}
       </ul>
 
-      <button type='button' className={styles.addButton} aria-label='add button' onClick={addTodoHandler} />
-      {showModal ? <TodoAddModal /> : null}
+      <button type='button' className={styles.addButton} aria-label='add button' onClick={showModalHandler} />
+      {showModal ? (
+        <div className={styles.modalWrap} ref={closeRef}>
+          <TodoAddModal createTodoHanlder={createTodoHanlder} createTodoListHandler={createTodoListHandler} />
+        </div>
+      ) : null}
     </section>
   )
 }
