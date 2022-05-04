@@ -1,2 +1,110 @@
-.test {
+@use '../../styles/constants/colors' as color;
+@use '../../styles/mixins/position';
+@use '../../styles/mixins/flexbox';
+@use '../../styles/constants/levels' as idx;
+
+.todoWrapper {
+  position: relative;
+  width: 350px;
+  height: 90vh;
+  padding: 60px 30px 30px;
+  background: color.$WRAPPER_BACKGROUND;
+  border-radius: 36px;
+}
+
+.todoHeader {
+  h1 {
+    font-size: 28px;
+  }
+}
+
+.categoryInner {
+  display: inline;
+
+  .cateBlock {
+    width: 80px;
+    height: 50px;
+    background: color.$RED;
+  }
+}
+
+.todoList {
+  input[type='text'] {
+    width: 100%;
+    height: 30px;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid color.$BIG_TITLE;
+  }
+
+  .todoInner {
+    height: 250px;
+    margin-top: 1rem;
+    overflow: scroll;
+  }
+}
+
+.todoElement {
+  width: 100%;
+  height: 40px;
+  padding: 0 1rem;
+  line-height: 40px;
+  background: color.$WHITE;
+  border-radius: 12px;
+  @include flexbox.flexbox('start', 'center');
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+
+  .todoText {
+    color: color.$BLACK;
+  }
+
+  .isDone {
+    color: color.$GRAYA;
+  }
+
+  input[type='checkbox'] {
+    z-index: idx.$CHECK_BOX;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    outline: 2px solid color.$PURPLE;
+
+    &:checked {
+      background: color.$APP_BACKGROUND;
+      border: none;
+      outline: 2px solid color.$APP_BACKGROUND;
+
+      ~ svg {
+        color: color.$WHITE;
+      }
+    }
+  }
+
+  p {
+    margin-left: 0.8rem;
+    line-height: 40px;
+  }
+
+  svg {
+    z-index: idx.$CHECK_ICON;
+    color: color.$WHITE;
+    pointer-events: none;
+    transform: translate(-100%, 0%);
+  }
+}
+
+.todoAddBtn {
+  @include position.absolute(auto 30px 30px auto);
+  width: 50px;
+  height: 50px;
+  background: color.$PURPLE;
+  border-radius: 50%;
+
+  svg {
+    color: color.$WHITE;
+    transform: translate(8%, 8%);
+  }
 }
