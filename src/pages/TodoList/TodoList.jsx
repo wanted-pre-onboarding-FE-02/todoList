@@ -1,31 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './TodoList.module.scss'
 import { CheckIcon, EditIcon, TrashIcon } from '../../assets/svgs'
 import Modal from '../../components/Common/Modal/Modal'
 
-const DUMMY_LIST = [
-  {
-    id: 1,
-    content: 'first',
-    done: false,
-  },
-  {
-    id: 2,
-    content: 'second',
-    done: false,
-  },
-  {
-    id: 3,
-    content: 'third',
-    done: true,
-  },
-]
-const id = 0
-
 function TodoList() {
   const [todoList, setTodoList] = useState([])
-  const [doneCheckbox, setDoneCheckbox] = useState(true)
   const [modal, setModal] = useState(false)
+  const [todoEditText, setTodoEditText] = useState('')
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [todoList])
 
   const shwoModal = () => {
     setModal(true)
@@ -49,7 +37,7 @@ function TodoList() {
     setModal(false)
   }
 
-  const todoDoneHandler = (todo) => {
+  const todoDoneToggleHandler = (todo) => {
     const findTodoItem = todoList.findIndex((todoItem) => todoItem.id === todo.id)
     const clickTodo = todoList.map((todoItem) => {
       return todoItem.id === todo.id ? { ...todoItem, done: !todoList[findTodoItem].done } : todoItem
@@ -62,12 +50,28 @@ function TodoList() {
     const clickTodo = todoList.map((todoItem) => {
       return todoItem.id === todo.id ? { ...todoItem, edit: !todoList[findTodoItem].edit } : todoItem
     })
+    setTodoEditText(todoList[findTodoItem].content)
+
     setTodoList(clickTodo)
+  }
+
+  const editTodoTextHandler = (e) => {
+    setTodoEditText(e.currentTarget.value)
   }
 
   const deleteTodoHandler = (todo) => {
     const remoteAfterTodo = todoList.filter((todoItem) => todo.id !== todoItem.id)
     setTodoList(remoteAfterTodo)
+  }
+
+  const editFocusOutHandler = (todo) => {
+    const findTodoItem = todoList.findIndex((todoItem) => todoItem.id === todo.id)
+    const clickTodo = todoList.map((todoItem) => {
+      return todoItem.id === todo.id
+        ? { ...todoItem, content: todoEditText, edit: !todoList[findTodoItem].edit }
+        : todoItem
+    })
+    setTodoList(clickTodo)
   }
 
   return (
@@ -80,13 +84,20 @@ function TodoList() {
           <div className={styles.tasks} key={todo.id}>
             <div className={styles.wrap}>
               {todo.done ? (
-                <CheckIcon className={styles.icon} onClick={() => todoDoneHandler(todo)} />
+                <CheckIcon className={styles.icon} onClick={() => todoDoneToggleHandler(todo)} />
               ) : (
-                <button type='submit' aria-hidden className={styles.done} onClick={() => todoDoneHandler(todo)} />
+                <button type='submit' aria-hidden className={styles.done} onClick={() => todoDoneToggleHandler(todo)} />
               )}
 
               {todo.edit ? (
-                <input type='text' className={styles.editInput} value={todo.content} />
+                <input
+                  type='text'
+                  value={todoEditText}
+                  ref={inputRef}
+                  className={styles.editInput}
+                  onChange={editTodoTextHandler}
+                  onBlur={() => editFocusOutHandler(todo)}
+                />
               ) : (
                 <p className={styles.taskContent}>{todo.content}</p>
               )}
