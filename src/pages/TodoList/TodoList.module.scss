@@ -1,2 +1,113 @@
-.test {
+@use '/src/styles/constants/colors';
+@use '/src/styles/constants/sizes';
+@use '/src/styles/mixins/position';
+@use '/src/styles/mixins/flexbox';
+
+.todoList {
+  position: relative;
+  width: 380px;
+  height: 720px;
+  padding: 30px;
+  font-weight: 600;
+  background-color: #f8fbfb;
+  border-radius: 40px;
+
+  &.on {
+    background-color: rgba(0, 0, 0, 60%);
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    font-size: 30px;
+    color: colors.$BIG_TITLE;
+  }
+
+  > p {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: colors.$GRAYA;
+  }
+
+  .categories {
+    height: 200px;
+    font-size: 12px;
+    color: colors.$GRAYA;
+  }
+
+  .task {
+    position: relative;
+    display: flex;
+    padding: 15px 10px;
+    font-weight: 500;
+    color: colors.$GRAY3;
+    background-color: colors.$WHITE;
+    border-radius: 15px;
+
+    + .task {
+      margin-top: 18px;
+    }
+
+    .checkboxWrap {
+      position: relative;
+    }
+
+    > span {
+      margin-left: 10px;
+    }
+
+    .edit {
+      @include position.absolute(0 20px 0 0);
+      width: 20px;
+      height: 20px;
+      font-size: 10px;
+      cursor: pointer;
+      fill: blueviolet;
+    }
+  }
+
+  .inputAdd {
+    @include position.absolute(auto 50px 33px auto);
+    width: 80%;
+    height: sizes.$H_NAV;
+    padding: 10px;
+    background-color: colors.$WHITE;
+    border: 1px solid colors.$GRAYD;
+    border-radius: 20px;
+    transition: 0.3s;
+  }
+
+  .addButton,
+  .confirmButton {
+    @include position.absolute(auto 30px 30px auto);
+    width: 56px;
+    height: 56px;
+    background-color: colors.$BLUE;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px 0 rgba(colors.$BLACK, 15%);
+    transition: 0.2s;
+  }
+
+  .confirmButton {
+    .confirmIcon {
+      width: 30px;
+      height: 30px;
+      color: colors.$WHITE;
+    }
+  }
+
+  .addButton {
+    &::before,
+    &::after {
+      @include position.middleBox;
+      width: 20px;
+      height: 2px;
+      content: '';
+      background-color: colors.$WHITE;
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
 }
