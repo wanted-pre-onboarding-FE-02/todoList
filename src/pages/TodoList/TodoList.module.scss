@@ -70,7 +70,11 @@
     @include flexbox.flexbox('start', 'center');
 
     p {
+      max-width: 170px;
+      overflow: hidden;
+      line-height: 40px;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -120,8 +124,14 @@
   }
 }
 
+.todoEditBtn {
+  width: 30px;
+  height: 100%;
+}
+
 .todoAddBtn {
   @include position.absolute(auto 30px 30px auto);
+  z-index: idx.$CHECK_ICON;
   width: 50px;
   height: 50px;
   background: color.$PURPLE;
@@ -132,4 +142,24 @@
     color: color.$WHITE;
     transform: translate(8%, 8%);
   }
+}
+
+.addModal {
+  @include position.relative(auto 30px 496px auto);
+  @include flexbox.flexbox('center', 'center');
+  z-index: idx.$CHECK_BOX;
+  flex-direction: column;
+  width: 350px;
+  height: 90vh;
+  padding: 30px;
+  background: color.$WRAPPER_BACKGROUND;
+  border-radius: 36px;
+}
+
+.addTodoInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 2px solid color.$PURPLE;
+  box-shadow: 0 5px 6px -6px color.$PURPLE;
 }

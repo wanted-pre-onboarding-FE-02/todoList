@@ -1,56 +1,16 @@
 import React, { useCallback, useRef, useState } from 'react'
 import styles from './TodoList.module.scss'
-import { PlusIcon, CheckIcon, MenuIcon, SearchIcon } from '../../assets/svgs/index'
+import { PlusIcon, CheckIcon, MenuIcon, SearchIcon, EditIcon } from '../../assets/svgs/index'
 import { cx } from '../../styles/index'
-
-const CATEGORY = ['work', 'exercise', 'study']
-const INITIAL_TODO = [
-  {
-    id: 1,
-    content: 'do something',
-    done: false,
-  },
-  {
-    id: 2,
-    content: 'play badminton',
-    done: false,
-  },
-  {
-    id: 3,
-    content: 'eat hamburger',
-    done: false,
-  },
-  {
-    id: 4,
-    content: 'learn typescript',
-    done: false,
-  },
-  {
-    id: 5,
-    content: 'learn typescript',
-    done: false,
-  },
-  {
-    id: 6,
-    content: 'learn typescript',
-    done: false,
-  },
-  {
-    id: 7,
-    content: 'learn typescript',
-    done: false,
-  },
-  {
-    id: 8,
-    content: 'learn typescript',
-    done: false,
-  },
-]
+import { CATEGORY, INITIAL_TODO } from './Variables'
 
 function TodoList() {
   const nextId = useRef(9)
   const [todos, setTodos] = useState([...INITIAL_TODO])
   const [text, setText] = useState('')
+  const [show, setShow] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [selected, setSelected] = useState(0)
 
   const onChangeTodoCheck = useCallback((e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -65,16 +25,37 @@ function TodoList() {
   const onChangeText = (e) => {
     setText(e.currentTarget.value)
   }
-  const onAddTodo = () => {
-    if (text.trim() === '') return
+  const onAddAndToggleTodo = () => {
+    if (text.trim() === '') {
+      setShow((prev) => !prev)
+      return
+    }
 
     const newTodo = {
       content: text.trim(),
       id: nextId.current,
+      done: false,
     }
 
     setTodos(todos.concat(newTodo))
     nextId.current += 1
+    setText('')
+    setShow((prev) => !prev)
+  }
+
+  const onClickEdit = (e) => {
+    setIsEditing((prev) => !prev)
+    const EDIT_ID = parseInt(e.target.dataset.id, 10)
+    setSelected(EDIT_ID)
+    setShow((prev) => !prev)
+    const newText = todos.filter((todo) => todo.id === EDIT_ID)[0].content
+    setText(newText)
+  }
+
+  const onEditTodo = () => {
+    setTodos((todos) => todos.map((todo, index) => (todo.id === selected ? { ...todo, content: text } : todo)))
+    setIsEditing(false)
+    setShow((prev) => !prev)
     setText('')
   }
 
@@ -115,6 +96,9 @@ function TodoList() {
                     <CheckIcon />
                     <p>{todo.content}</p>
                   </div>
+                  <button type='button' className={styles.todoEditBtn} data-id={todo.id} onClick={onClickEdit}>
+                    ✏️
+                  </button>
                   <button type='button' className={styles.todoDeleteBtn} data-id={todo.id} onClick={onRemoveTodo}>
                     x
                   </button>
@@ -123,10 +107,22 @@ function TodoList() {
             })}
           </ul>
         </div>
-        <button type='button' className={styles.todoAddBtn} aria-label='Add Todo Button' onClick={onAddTodo}>
-          <PlusIcon />
-        </button>
+        {isEditing ? (
+          <button type='button' className={styles.todoAddBtn} aria-label='Add Todo Button' onClick={onEditTodo}>
+            ✏️
+          </button>
+        ) : (
+          <button type='button' className={styles.todoAddBtn} aria-label='Add Todo Button' onClick={onAddAndToggleTodo}>
+            <PlusIcon />
+          </button>
+        )}
       </main>
+      {show && (
+        <div className={styles.addModal}>
+          <h3>Today&#39;s tasks is...</h3>
+          <input type='text' value={text} onChange={onChangeText} className={styles.addTodoInput} />
+        </div>
+      )}
     </section>
   )
 }
