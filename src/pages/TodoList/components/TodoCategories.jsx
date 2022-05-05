@@ -15,16 +15,9 @@ const TodoCategories = () => {
     <div className={styles.category}>
       <p className={styles.task_title}>CATEGORIES</p>
       <ul className={styles.list_slider}>
-        <li className={styles.item}>
+        <li className={`${styles.item} ${styles.business}`}>
           <span className={styles.text_count}>40 tasks</span>
-          <p className={styles.text_category}>40 tasks</p>
-          <div className={styles.progress}>
-            <span className={`${styles.progress_bar} ${styles.purple}`}>70%</span>
-          </div>
-        </li>
-        <li className={styles.item}>
-          <span className={styles.text_count}>40 tasks</span>
-          <p className={styles.text_category}>40 tasks</p>
+          <p className={styles.text_category}>Business</p>
           <div className={styles.progress}>
             <span className={`${styles.progress_bar} ${styles.purple}`}>70%</span>
           </div>
