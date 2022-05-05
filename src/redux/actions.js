@@ -3,7 +3,6 @@ export const DELETE_TODO = 'DELETE_TODO'
 export const TOGGLE_CHECK = 'TOGGLE_CHECK'
 
 export function addTodo(todo) {
-  console.log(todo)
   return {
     type: ADD_TODO,
     payload: { todo, id: Date.now(), checked: false },

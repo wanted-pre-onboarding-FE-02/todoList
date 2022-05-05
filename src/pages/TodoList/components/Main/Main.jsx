@@ -2,9 +2,8 @@ import PropTypes from 'prop-types'
 
 import classes from './Main.module.scss'
 
-import TodoItem from '../List/TodoItem'
-
 import InputFormContainer from '../../containers/InputFormContainer'
+import TodoItemContainer from '../../containers/TodoItemContainer'
 
 function Main({ todos }) {
   return (
@@ -18,8 +17,8 @@ function Main({ todos }) {
       <div className={classes.list}>
         <h2 className={classes.main__category}>Today&apos;s Tasks</h2>
         <ul className={classes.list__content}>
-          {todos.map((item, i) => (
-            <TodoItem item={item} key={`item-${i}`} />
+          {todos.map((item) => (
+            <TodoItemContainer item={item} />
           ))}
         </ul>
       </div>

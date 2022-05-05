@@ -3,13 +3,10 @@ import PropTypes from 'prop-types'
 import classes from './TodoItem.module.scss'
 
 import { ReactComponent as Check } from '../svgs/check.svg'
-import { useState } from 'react'
 
-function TodoItem({ item, key }) {
-  const [isChecked, setIsChecked] = useState(item.checked)
-
+function TodoItem({ item, toggle }) {
   const checkHandler = () => {
-    setIsChecked((prev) => !prev)
+    toggle(item)
   }
 
   const deleteHandler = () => {}
@@ -18,16 +15,16 @@ function TodoItem({ item, key }) {
     // Non-interactive elements should not be assigned mouse or keyboard event listeners. <=린터 에러
     // https://issueantenna.com/repo/nala723/The-Dreamer/issues/98
     // <li className={classes.item} role='presentation' onClick={checkHandler}>
-    <li className={classes.item} key={key}>
+    <li className={classes.item}>
       <button
         type='button'
-        className={`${classes.item__checkBtn} ${isChecked ? '' : classes['notChecked--btn']}`}
+        className={`${classes.item__checkBtn} ${item.checked ? '' : classes['notChecked--btn']}`}
         onClick={checkHandler}
       >
         <Check />
       </button>
-      <p className={`${classes.item__todo} ${isChecked ? '' : classes['notChecked--text']}`}>{item.todo}</p>
-      {isChecked && (
+      <p className={`${classes.item__todo} ${item.checked ? '' : classes['notChecked--text']}`}>{item.todo}</p>
+      {item.checked && (
         <button type='button' className={classes.item__deleteBtn} onClick={deleteHandler}>
           delete
         </button>
@@ -42,7 +39,7 @@ TodoItem.propTypes = {
     todo: PropTypes.string.isRequired,
     checked: PropTypes.bool.isRequired,
   }).isRequired,
-  key: PropTypes.string.isRequired,
+  toggle: PropTypes.func.isRequired,
 }
 
 export default TodoItem

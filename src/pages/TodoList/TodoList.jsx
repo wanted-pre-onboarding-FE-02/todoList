@@ -8,10 +8,6 @@ import MainContainer from './containers/MainContainer'
 import PlusBtn from './components/PlusBtn/PlusBtn'
 
 function TodoList() {
-  store.subscribe(() => {
-    console.log(store.getState())
-  })
-
   return (
     <div className={classes.wrapper}>
       <Provider store={store}>
