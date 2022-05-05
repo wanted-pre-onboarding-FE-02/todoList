@@ -46,21 +46,22 @@ function TodoList() {
     setShowModal(true)
   }
 
-  const todoValueChangeHandler = (e) => {
-    setEditValue(e.currentTarget.value)
-  }
-
   const editHandler = (id) => {
     const index = todoList.findIndex((item) => item.id === id)
     const editMode = todoList.map((item) => {
       return id === item.id ? { ...item, edit: !todoList[index].edit } : item
     })
-    console.log(editMode)
+
     setTodoList(editMode)
   }
 
-  // const editCompletedHandler = () => {
-  // }
+  const todoValueChangeHandler = (id, e) => {
+    const editText = todoList.map((item) => {
+      return id === item.id ? { ...item, text: e.currentTarget.value } : item
+    })
+
+    setTodoList(editText)
+  }
 
   const deleteHandler = (id) => {
     const newTodo = todoList.filter((item) => item.id !== id)
@@ -91,9 +92,9 @@ function TodoList() {
             {todo.edit ? (
               <>
                 <div className={styles.checkboxWrap}>
-                  <input type='text' value={editValue} onChange={todoValueChangeHandler} />
+                  <input type='text' value={todo.text} onChange={(e) => todoValueChangeHandler(todo.id, e)} />
                 </div>
-                <EditIcon className={styles.edit} />
+                <EditIcon className={styles.edit} onClick={() => editHandler(todo.id)} />
               </>
             ) : (
               <>
