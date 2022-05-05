@@ -92,7 +92,7 @@
   }
 
   input[type='checkbox'] {
-    z-index: idx.$CHECK_BOX;
+    // z-index: idx.$CHECK_BOX;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -111,7 +111,7 @@
   }
 
   svg {
-    z-index: idx.$CHECK_ICON;
+    // z-index: idx.$CHECK_ICON;
     color: color.$WHITE;
     pointer-events: none;
     opacity: 0;
