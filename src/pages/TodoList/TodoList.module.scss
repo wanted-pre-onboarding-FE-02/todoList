@@ -1,2 +1,12 @@
-.test {
+@use '/src/styles/constants/colors' as colors;
+@use '/src/styles/constants/sizes' as sizes;
+
+.container {
+  height:720px;
+  width:360px;
+  border-radius: 60px;
+  background-color:colors.$TODO_BG;
+  padding:sizes.$PADDING_X;
+  padding-top: 45px;
+
 }

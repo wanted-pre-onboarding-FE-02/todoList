@@ -1,6 +1,17 @@
+$SCREEN_BG:#dee3f9;
+$TODO_BG:#F9FAFD;
+
+$TEXT_DARK: #1f315b;
+$TEXT_GRAY: #8f99bf;
+
+$TASK_ITEM_TITLE: #4f566f;
+
+$SHADOW: 0 0 .5rem rgba(78, 78, 78, 0.1);
+
 // Grayscale
 $WHITE: #ffffff;
 $BLACK: #000000;
+$GRAY1:#989AAF; // Header Icon 
 $GRAY2: #222222;
 $GRAY3: #333333;
 $GRAY6: #666666;
@@ -19,6 +30,4 @@ $INDIGO: #5856d6;
 $PURPLE: #af52de;
 $PINK: #ff2d55;
 
-$BIG_TITLE: #1f315b;
-$TASKS_TITLE: #8f99bf;
-$TASK_ITEM_TITLE: #4f566f;
+
