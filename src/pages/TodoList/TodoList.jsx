@@ -4,7 +4,7 @@ import store from '../../redux/store'
 import classes from './TodoList.module.scss'
 
 import NavigationBar from './components/Navbar/NavigationBar'
-import Main from './components/Main/Main'
+import MainContainer from './containers/MainContainer'
 import PlusBtn from './components/PlusBtn/PlusBtn'
 
 function TodoList() {
@@ -16,7 +16,7 @@ function TodoList() {
     <div className={classes.wrapper}>
       <Provider store={store}>
         <NavigationBar store={store} />
-        <Main />
+        <MainContainer />
         <PlusBtn />
       </Provider>
     </div>

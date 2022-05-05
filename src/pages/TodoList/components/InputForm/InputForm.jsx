@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { connect } from 'react-redux'
-import { addTodo } from '../../../../redux/actions'
-
 import classes from './InputForm.module.scss'
 
 function InputForm({ add }) {
@@ -11,11 +8,11 @@ function InputForm({ add }) {
 
   const changeInputHandler = (e) => {
     setInput(e.target.value)
-    console.log(input)
   }
 
   const submitHandler = (e) => {
     e.preventDefault()
+    if (input.trim().length === 0) return
     add(input)
 
     setInput('')
@@ -35,11 +32,4 @@ InputForm.propTypes = {
   add: PropTypes.func,
 }
 
-export default connect(
-  (_) => ({}),
-  (dispatch) => ({
-    add: (text) => {
-      dispatch(addTodo(text))
-    },
-  })
-)(InputForm)
+export default InputForm

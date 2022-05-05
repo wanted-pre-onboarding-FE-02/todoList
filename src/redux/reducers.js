@@ -3,7 +3,7 @@ import { ADD_TODO, DELETE_TODO, TOGGLE_CHECK } from './actions'
 const initialState = []
 
 // eslint-disable-next-line default-param-last
-export function todo(prevState = initialState, action) {
+export function todos(prevState = initialState, action) {
   switch (action.type) {
     case ADD_TODO:
       return [...prevState, action.payload]
