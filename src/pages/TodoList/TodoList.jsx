@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import styles from './TodoList.module.scss'
-import { PlusIcon, CheckIcon, MenuIcon, SearchIcon, EditIcon } from '../../assets/svgs/index'
-import { cx } from '../../styles/index'
+import { PlusIcon, CheckIcon, MenuIcon, SearchIcon } from '../../assets/svgs/index'
 import { CATEGORY, INITIAL_TODO } from './Variables'
 
 function TodoList() {
@@ -12,10 +11,10 @@ function TodoList() {
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
 
-  const onChangeTodoCheck = useCallback((e) => {
+  const onChangeTodoCheck = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
     setTodos((todos) => todos.map((todo, index) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
-  }, [])
+  }
 
   const onRemoveTodo = (e) => {
     const DELETE_ID = parseInt(e.target.dataset.id, 10)
@@ -25,7 +24,8 @@ function TodoList() {
   const onChangeText = (e) => {
     setText(e.currentTarget.value)
   }
-  const onAddAndToggleTodo = () => {
+
+  const onAddAndToggleTodo = useCallback(() => {
     if (text.trim() === '') {
       setShow((prev) => !prev)
       return
@@ -41,14 +41,14 @@ function TodoList() {
     nextId.current += 1
     setText('')
     setShow((prev) => !prev)
-  }
+  }, [text, todos])
 
   const onClickEdit = (e) => {
     setIsEditing((prev) => !prev)
     const EDIT_ID = parseInt(e.target.dataset.id, 10)
     setSelected(EDIT_ID)
     setShow((prev) => !prev)
-    const newText = todos.filter((todo) => todo.id === EDIT_ID)[0].content
+    const newText = todos.find((element) => element.id === EDIT_ID).content
     setText(newText)
   }
 
@@ -119,7 +119,7 @@ function TodoList() {
       </main>
       {show && (
         <div className={styles.addModal}>
-          <h3>Today&#39;s tasks is...</h3>
+          <h3>Today&#39;s task is...</h3>
           <input type='text' value={text} onChange={onChangeText} className={styles.addTodoInput} />
         </div>
       )}

@@ -22,22 +22,22 @@ export const INITIAL_TODO = [
   },
   {
     id: 5,
-    content: 'learn typescript',
+    content: 'learn typescriptttttttttttttttttttt',
     done: false,
   },
   {
     id: 6,
-    content: 'learn typescript',
+    content: 'sleep',
     done: false,
   },
   {
     id: 7,
-    content: 'learn typescript',
+    content: 'sleep',
     done: false,
   },
   {
     id: 8,
-    content: 'learn typescript',
+    content: 'sleep',
     done: false,
   },
 ]
