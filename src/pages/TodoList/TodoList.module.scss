@@ -1,2 +1,170 @@
-.test {
+@use '../../styles/constants/colors' as color;
+@use '../../styles/mixins/position';
+@use '../../styles/mixins/flexbox';
+@use '../../styles/mixins/animation';
+@use '../../styles/constants/levels' as idx;
+
+.todoWrapper {
+  position: relative;
+  width: 350px;
+  height: 90vh;
+  padding: 60px 30px 0;
+  background: color.$WRAPPER_BACKGROUND;
+  border-radius: 36px;
+  box-shadow: color.$SHADOW -4px 9px 25px -6px;
+
+  h1 {
+    font-size: 28px;
+  }
+}
+
+.headerBtns {
+  margin-bottom: 1rem;
+  @include flexbox.flexbox('between', 'center');
+}
+
+.todoContent {
+  h3 {
+    margin: 0.5rem 0;
+    color: color.$TASKS_TITLE;
+    text-transform: uppercase;
+  }
+
+  .categoryInner {
+    @include flexbox.flexbox('between', 'center');
+
+    li {
+      height: 50px;
+      line-height: 50px;
+    }
+  }
+
+  .todoList {
+    input[type='text'] {
+      width: 100%;
+      height: 30px;
+      padding: 0 0.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid color.$PURPLE;
+      transition: 0.2s all;
+    }
+
+    .todoInner {
+      height: 250px;
+      overflow: scroll;
+    }
+  }
+}
+
+.todoElement {
+  width: 100%;
+  height: 40px;
+  padding-left: 1rem;
+  line-height: 40px;
+  background: color.$WHITE;
+  border-radius: 12px;
+  @include flexbox.flexbox('between', 'center');
+
+  > .checkboxWrapper {
+    width: 100%;
+    @include flexbox.flexbox('start', 'center');
+
+    p {
+      max-width: 170px;
+      overflow: hidden;
+      line-height: 40px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  > .todoDeleteBtn {
+    width: 30px;
+    height: 100%;
+    color: color.$WHITE;
+    background: color.$RED;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  & + & {
+    margin-top: 0.5rem;
+  }
+
+  input[type='checkbox'] {
+    z-index: idx.$CHECK_BOX;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    outline: 2px solid color.$PURPLE;
+
+    &:checked {
+      background: color.$APP_BACKGROUND;
+      border: none;
+      outline: 2px solid color.$APP_BACKGROUND;
+
+      ~ svg {
+        color: color.$WHITE;
+        opacity: 1;
+      }
+    }
+  }
+
+  svg {
+    z-index: idx.$CHECK_ICON;
+    color: color.$WHITE;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-100%, 0%);
+  }
+
+  input[type='checkbox']:checked ~ p {
+    color: color.$GRAYA;
+    text-decoration: line-through;
+  }
+}
+
+.todoEditBtn {
+  width: 30px;
+  height: 100%;
+}
+
+.todoAddBtn {
+  @include position.absolute(auto 30px 30px auto);
+  z-index: idx.$CHECK_ICON;
+  width: 50px;
+  height: 50px;
+  background: color.$PURPLE;
+  border-radius: 50%;
+  box-shadow: color.$PURPLE 1px 2px 8px;
+
+  svg {
+    color: color.$WHITE;
+    transform: translate(8%, 8%);
+  }
+}
+
+.addModal {
+  @include position.relative(auto 30px 496px auto);
+  @include flexbox.flexbox('center', 'center');
+  z-index: idx.$CHECK_BOX;
+  flex-direction: column;
+  width: 350px;
+  height: 90vh;
+  padding: 30px;
+  background: color.$WRAPPER_BACKGROUND;
+  border-radius: 36px;
+
+  h3 {
+    margin-bottom: 2rem;
+    font-size: 24px;
+  }
+}
+
+.addTodoInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 2px solid color.$PURPLE;
+  box-shadow: 0 5px 6px -6px color.$PURPLE;
 }
