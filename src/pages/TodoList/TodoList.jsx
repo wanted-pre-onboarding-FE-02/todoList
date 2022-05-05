@@ -9,23 +9,27 @@ function TodoList() {
       id: 1,
       text: 'Jira 셋팅',
       done: false,
+      edit: false,
     },
     {
       id: 2,
       text: 'TIL 쓰기',
       done: false,
+      edit: false,
     },
     {
       id: 3,
       text: '팀 과제 하기',
       done: false,
+      edit: false,
     },
   ]
 
   const [todoList, setTodoList] = useState([])
-  const [todoEdit, setTodoEdit] = useState(false)
   const [todoValue, setTodoValue] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [editValue, setEditValue] = useState('')
+
   const closeRef = useRef()
 
   const createTodoHanlder = (todoText) => {
@@ -33,8 +37,9 @@ function TodoList() {
   }
 
   const createTodoListHandler = () => {
-    setTodoList([...todoList, { id: Date.now(), text: todoValue, done: false }])
+    setTodoList([...todoList, { id: Date.now(), text: todoValue, done: false, edit: false }])
     setShowModal(false)
+    setTodoValue('')
   }
 
   const showModalHandler = () => {
@@ -42,16 +47,20 @@ function TodoList() {
   }
 
   const todoValueChangeHandler = (e) => {
-    setTodoValue(e.currentTarget.value)
+    setEditValue(e.currentTarget.value)
   }
 
-  const editHandler = (todoItemID) => {
-    setTodoEdit(true)
+  const editHandler = (id) => {
+    const index = todoList.findIndex((item) => item.id === id)
+    const editMode = todoList.map((item) => {
+      return id === item.id ? { ...item, edit: !todoList[index].edit } : item
+    })
+    console.log(editMode)
+    setTodoList(editMode)
   }
 
-  const editCompletedHandler = () => {
-    setTodoEdit(false)
-  }
+  // const editCompletedHandler = () => {
+  // }
 
   const deleteHandler = (id) => {
     const newTodo = todoList.filter((item) => item.id !== id)
@@ -79,12 +88,12 @@ function TodoList() {
       <ul>
         {todoList.map((todo) => (
           <li key={`todo-${todo.id}`} className={styles.task}>
-            {todoEdit ? (
+            {todo.edit ? (
               <>
                 <div className={styles.checkboxWrap}>
-                  <input type='text' value={todoValue} onChange={todoValueChangeHandler} />
+                  <input type='text' value={editValue} onChange={todoValueChangeHandler} />
                 </div>
-                <EditIcon className={styles.edit} onClick={editCompletedHandler} />
+                <EditIcon className={styles.edit} />
               </>
             ) : (
               <>
