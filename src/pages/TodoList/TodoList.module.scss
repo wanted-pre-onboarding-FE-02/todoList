@@ -23,63 +23,70 @@
   }
 
   .tasks {
-    display: flex;
-    @include flexbox.flexbox(between, center);
-    padding: 10px;
-    background-color: colors.$WHITE;
-    border-radius: 10px;
+    height: 400px;
+    overflow-y: scroll;
 
-    .wrap {
+    .task {
       display: flex;
-      @include flexbox.flexbox(start, center);
+      @include flexbox.flexbox(between, center);
+      padding: 10px;
+      background-color: colors.$WHITE;
+      border-radius: 10px;
 
-      .icon {
-        cursor: pointer;
-        background-color: aqua;
-        border: 2px solid colors.$TEAL;
-        border-radius: 50%;
-      }
+      .wrap {
+        display: flex;
+        @include flexbox.flexbox(start, center);
 
-      .done {
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        border: 2px solid colors.$TEAL;
-        border-radius: 50%;
-      }
+        .icon {
+          cursor: pointer;
+          background-color: colors.$GRAYA;
+          border: 2px solid colors.$TEAL;
+          border-radius: 50%;
+        }
 
-      .editInput {
-        width: 180px;
-        margin-left: 10px;
-        border: 1px solid colors.$GRAYE;
-      }
+        .done {
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+          border: 2px solid colors.$TEAL;
+          border-radius: 50%;
+        }
 
-      .doneContainer {
-        @include position.relative(0);
-
-        .taskContent {
+        .editInput {
+          width: 180px;
           margin-left: 10px;
+          border: 1px solid colors.$GRAYE;
         }
 
-        .todoDone {
-          width: 90%;
-          border: 1px solid colors.$GRAY6;
-          @include position.absolute(50% 0 auto auto);
+        .doneContainer {
+          @include position.relative(0);
+          margin-left: 10px;
+
+          .taskContent {
+            max-width: 200px;
+            overflow: auto;
+          }
+
+          .todoDone {
+            width: 100%;
+            border: 1px solid colors.$GRAY6;
+            @include position.absolute(50% 0 auto auto);
+          }
+        }
+
+        .editIcon {
+          margin-right: 10px;
+          cursor: pointer;
+        }
+
+        .trashIcon {
+          cursor: pointer;
         }
       }
 
-      .editIcon {
-        margin-right: 10px;
-        cursor: pointer;
+      + .task {
+        margin-top: 10px;
       }
-
-      .trashIcon {
-        cursor: pointer;
-      }
-    }
-
-    + .tasks {
-      margin-top: 10px;
     }
   }
 
