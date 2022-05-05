@@ -1,0 +1,12 @@
+@use '/src/styles/constants/sizes' as sizes;
+
+.container {
+  padding:0;
+}
+
+.categoryWrapper {
+  padding: 10px 10px;
+  display: flex;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

@@ -1,0 +1,31 @@
+@use '/src/styles/constants/sizes' as sizes;
+@use '/src/styles/constants/colors' as colors;
+
+.container {
+  height: 110px;
+  min-width: 180px;
+  margin-right: 30px;
+  border:1px solid transparent;
+  border-radius: 20px;
+  box-shadow: colors.$SHADOW;
+  padding:20px 0px 15px 20px;
+  font-weight: 700;
+}
+
+.taskCount {
+  color: colors.$TEXT_GRAY;
+  margin-bottom: 7px;
+}
+
+.taskTitle {
+  color: colors.$TEXT_DARK;
+  font-size: 20px;
+  margin-bottom: 7px;
+}
+
+.taskRange {
+  width: 100%;
+  margin-bottom: 1rem;
+  accent-color:black;
+  cursor: pointer;
+}
