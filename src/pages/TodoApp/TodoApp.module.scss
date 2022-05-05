@@ -1,0 +1,45 @@
+@use '../../styles/constants/colors' as color;
+@use '../../styles/mixins/position';
+@use '../../styles/constants/levels' as idx;
+
+.todoWrapper {
+  position: relative;
+  width: 350px;
+  height: 90vh;
+  padding: 60px 30px 0;
+  background: color.$WRAPPER_BACKGROUND;
+  border-radius: 36px;
+  box-shadow: color.$SHADOW -4px 9px 25px -6px;
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .todoContent {
+    h3 {
+      margin: 0.5rem 0;
+      color: color.$TASKS_TITLE;
+      text-transform: uppercase;
+    }
+  }
+
+  .todoEditBtn {
+    width: 30px;
+    height: 100%;
+  }
+
+  .todoAddBtn {
+    @include position.absolute(auto 30px 30px auto);
+    z-index: idx.$CHECK_ICON;
+    width: 50px;
+    height: 50px;
+    background: color.$PURPLE;
+    border-radius: 50%;
+    box-shadow: color.$PURPLE 1px 2px 8px;
+
+    svg {
+      color: color.$WHITE;
+      transform: translate(8%, 8%);
+    }
+  }
+}

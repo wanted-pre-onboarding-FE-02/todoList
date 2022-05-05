@@ -1,0 +1,10 @@
+@use '../../styles/mixins/flexbox';
+
+.categoryInner {
+  @include flexbox.flexbox('between', 'center');
+
+  li {
+    height: 50px;
+    line-height: 50px;
+  }
+}
