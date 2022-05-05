@@ -11,14 +11,21 @@ function Modal(props) {
     setText(e.currentTarget.value)
   }
   const createTaskClickHandler = () => {
-    createTask(text)
+    if (text.length === 0)
+      closeModal(false)
+    else
+      createTask(text)
+  }
+  const cancelCreateTaskHandler = () => {
+    closeModal(false)
   }
   return (
     <div className={styles.modalPage}>
       <div className={styles.content}>
+        <Cancel onClick={cancelCreateTaskHandler}/>
         <h2>new todo</h2>
         <input type='text' onChange={changeTextHandler}/>
-        <button type='submit' onClick={createTaskClickHandler} >create</button>
+        <button type='submit' onClick={createTaskClickHandler}><p>CREATE</p></button>
       </div>
     </div>
   )

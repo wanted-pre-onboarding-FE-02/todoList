@@ -25,5 +25,18 @@
       padding:10px;
       border: 1px solid colors.$BLACK;
     }
+
+    button[type=submit] {
+      width:80%;
+      height: 30px;
+      background-color: colors.$BLUE;
+      border-radius: 10px;
+      margin-top: 10px;
+
+      p {
+        font-size: 16px;
+        color: colors.$WHITE;
+      }
+    }
   }
 }
