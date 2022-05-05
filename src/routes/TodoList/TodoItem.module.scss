@@ -53,11 +53,19 @@
     }
   }
 
-  .title {
+  .text {
+    flex-grow: 1;
+    height: 35px;
     overflow: hidden;
+    line-height: 35px;
     color: colors.$TASK_ITEM_TITLE;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: 0.2s;
+
+    &:hover {
+      color: colors.$BLUE;
+    }
   }
 
   .done {
@@ -69,7 +77,6 @@
     width: 28px;
     height: 28px;
     margin-right: 24px;
-    margin-left: auto;
 
     svg {
       opacity: 0;

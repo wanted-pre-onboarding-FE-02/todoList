@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
-import styles from './TodoItem.module.scss'
-import { CheckIcon, TrashIcon } from 'assets/svgs'
+import { Link } from 'react-router-dom'
 import { useTodoDispatch } from 'routes/TodoContext'
 import { cx } from 'styles'
+import styles from './TodoItem.module.scss'
+import { CheckIcon, TrashIcon } from 'assets/svgs'
 
-export default function TodoItem({ id, done, title }) {
+export default function TodoItem({ id, text, done }) {
   const dispatch = useTodoDispatch()
   const handleToggle = () => dispatch({ type: 'TOGGLE', id })
   const handleDelClick = () => dispatch({ type: 'REMOVE', id })
+  const handleSetUpdatedClick = () => dispatch({ type: 'SET_TODO', todo: { id, done, text } })
 
   return (
     <li className={styles.task}>
@@ -15,7 +17,9 @@ export default function TodoItem({ id, done, title }) {
         <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
         <CheckIcon />
       </div>
-      <p className={cx(styles.title, { [styles.done]: done })}>{title}</p>
+      <Link to='/todo-update' onClick={handleSetUpdatedClick} className={cx(styles.text, { [styles.done]: done })}>
+        {text}
+      </Link>
       <button type='button' onClick={handleDelClick} className={styles.remove}>
         <TrashIcon />
       </button>
@@ -25,6 +29,6 @@ export default function TodoItem({ id, done, title }) {
 
 TodoItem.propTypes = {
   id: PropTypes.number,
+  text: PropTypes.string,
   done: PropTypes.bool,
-  title: PropTypes.string,
 }

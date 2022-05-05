@@ -1,27 +1,25 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTodoDispatch, useTodoNextId } from '../TodoContext'
+import { useTodoDispatch, useTodoUpdated } from '../TodoContext'
 import TodoInput from 'components/TodoInput'
 
 export default function TodoCreate() {
   const dispatch = useTodoDispatch()
-  const nextId = useTodoNextId()
+  const updateTodo = useTodoUpdated()
   const navigate = useNavigate()
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(updateTodo.text || '')
 
   const handleChange = (e) => setValue(e.currentTarget.value)
-  const handleAddClick = () => {
+  const handleUpdateClick = () => {
     dispatch({
-      type: 'CREATE',
+      type: 'UPDATE',
       todo: {
-        id: nextId.current,
+        ...updateTodo,
         text: value,
-        done: false,
       },
     })
     setValue('')
-    nextId.current += 1
     navigate('/')
   }
-  return <TodoInput text={value} handleChange={handleChange} handleClick={handleAddClick} />
+  return <TodoInput isUpdate text={value} handleChange={handleChange} handleClick={handleUpdateClick} />
 }

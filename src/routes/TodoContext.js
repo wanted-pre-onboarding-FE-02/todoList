@@ -1,37 +1,58 @@
 import { useReducer, createContext, useContext, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-const initialTodos = [
-  // {
-  //   id: 0,
-  //   title: 'Todo 완성하기1',
-  //   done: false,
-  // },
-  // {
-  //   id: 1,
-  //   title: 'Todo 완성하기2',
-  //   done: false,
-  // },
-  // {
-  //   id: 2,
-  //   title: 'Todo 완성하기3',
-  //   done: false,
-  // },
-  // {
-  //   id: 3,
-  //   title: 'Todo 완성하기4',
-  //   done: true,
-  // },
-]
+const initialState = {
+  todos: [],
+  updatedTodo: {},
+}
+// {
+//   id: 0,
+//   text: 'Todo 완성하기1',
+//   done: false,
+// },
+// {
+//   id: 1,
+//   text: 'Todo 완성하기2',
+//   done: false,
+// },
+// {
+//   id: 2,
+//   text: 'Todo 완성하기3',
+//   done: false,
+// },
+// {
+//   id: 3,
+//   text: 'Todo 완성하기4',
+//   done: true,
+// },
 
 const todoReducer = (state, action) => {
   switch (action.type) {
     case 'CREATE':
-      return state.concat(action.todo)
+      return {
+        ...state,
+        todos: state.todos.concat(action.todo),
+      }
     case 'TOGGLE':
-      return state.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo))
+      return {
+        ...state,
+        todos: state.todos.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo)),
+      }
     case 'REMOVE':
-      return state.filter((todo) => todo.id !== action.id)
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== action.id),
+      }
+    case 'UPDATE':
+      return {
+        ...state,
+        todos: state.todos.map((todo) => (todo.id === action.todo.id ? { ...todo, text: action.todo.text } : todo)),
+      }
+    case `SET_TODO`:
+      return {
+        ...state,
+        updatedTodo: action.todo,
+      }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
   }
@@ -42,8 +63,8 @@ const TodoDispatchContext = createContext()
 const TodoNextIdContext = createContext()
 
 export function TodoProvider({ children }) {
-  const [state, dispatch] = useReducer(todoReducer, initialTodos)
-  const nextId = useRef(initialTodos.length)
+  const [state, dispatch] = useReducer(todoReducer, initialState)
+  const nextId = useRef(initialState.todos.length)
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
@@ -62,7 +83,7 @@ const useTodoState = () => {
   if (!context) {
     throw new Error('Cannot find TodoProvider')
   }
-  return context
+  return context.todos
 }
 
 const useTodoDispatch = () => {
@@ -81,4 +102,12 @@ const useTodoNextId = () => {
   return context
 }
 
-export { useTodoState, useTodoDispatch, useTodoNextId }
+const useTodoUpdated = () => {
+  const context = useContext(TodoStateContext)
+  if (!context) {
+    throw new Error('Cannot find TodoProvider')
+  }
+  return context.updatedTodo
+}
+
+export { useTodoState, useTodoDispatch, useTodoNextId, useTodoUpdated }
