@@ -5,7 +5,11 @@ import classes from './Main.module.scss'
 import InputFormContainer from '../../containers/InputFormContainer'
 import TodoItemContainer from '../../containers/TodoItemContainer'
 
-function Main({ todos }) {
+function Main({ todos, del }) {
+  const itemDeleteHandler = (item) => {
+    del(item)
+  }
+
   return (
     <div className={classes.main}>
       <h1 className={classes.main__title}>What&apos;s up, Joy!</h1>
@@ -18,7 +22,7 @@ function Main({ todos }) {
       <div className={classes.list}>
         <ul className={classes.list__content}>
           {todos.map((item) => (
-            <TodoItemContainer item={item} />
+            <TodoItemContainer item={item} onDelete={itemDeleteHandler} />
           ))}
         </ul>
       </div>
@@ -34,6 +38,7 @@ Main.propTypes = {
       checked: PropTypes.bool.isRequired,
     })
   ),
+  del: PropTypes.func.isRequired,
 }
 
 export default Main

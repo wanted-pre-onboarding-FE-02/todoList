@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import TodoItem from '../components/List/TodoItem'
 
-export default function TodoItemContainer({ item }) {
+export default function TodoItemContainer({ item, onDelete }) {
   const dispatch = useDispatch()
   const toggle = useCallback(
     (todo) => {
@@ -14,7 +14,7 @@ export default function TodoItemContainer({ item }) {
     [dispatch]
   )
 
-  return <TodoItem toggle={toggle} item={item} />
+  return <TodoItem toggle={toggle} item={item} onDelete={onDelete} />
 }
 
 TodoItemContainer.propTypes = {
@@ -23,4 +23,5 @@ TodoItemContainer.propTypes = {
     todo: PropTypes.string.isRequired,
     checked: PropTypes.bool.isRequired,
   }).isRequired,
+  onDelete: PropTypes.func.isRequired,
 }

@@ -8,7 +8,7 @@ export function todos(prevState = initialState, action) {
     case ADD_TODO:
       return [...prevState, action.payload]
     case DELETE_TODO:
-      return prevState
+      return [...prevState].filter((item) => item !== action.payload)
     case TOGGLE_CHECK:
       return [...prevState].map((item) => (item === action.payload ? { ...item, checked: !item.checked } : item))
     default:

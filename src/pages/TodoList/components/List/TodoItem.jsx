@@ -4,12 +4,14 @@ import classes from './TodoItem.module.scss'
 
 import { ReactComponent as Check } from '../svgs/check.svg'
 
-function TodoItem({ item, toggle }) {
+function TodoItem({ item, toggle, onDelete }) {
   const checkHandler = () => {
     toggle(item)
   }
 
-  const deleteHandler = () => {}
+  const clickDeleteHandler = () => {
+    onDelete(item)
+  }
 
   return (
     // Non-interactive elements should not be assigned mouse or keyboard event listeners. <=린터 에러
@@ -25,7 +27,7 @@ function TodoItem({ item, toggle }) {
       </button>
       <p className={`${classes.item__todo} ${item.checked ? '' : classes['notChecked--text']}`}>{item.todo}</p>
       {item.checked && (
-        <button type='button' className={classes.item__deleteBtn} onClick={deleteHandler}>
+        <button type='button' className={classes.item__deleteBtn} onClick={clickDeleteHandler}>
           delete
         </button>
       )}
@@ -40,6 +42,7 @@ TodoItem.propTypes = {
     checked: PropTypes.bool.isRequired,
   }).isRequired,
   toggle: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default TodoItem
