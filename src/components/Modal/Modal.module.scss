@@ -1,0 +1,21 @@
+@use '../../styles/constants/colors' as color;
+@use '../../styles/mixins/position';
+@use '../../styles/mixins/flexbox';
+@use '../../styles/constants/levels' as idx;
+
+.addModal {
+  @include position.relative(auto 30px 496px auto);
+  @include flexbox.flexbox('center', 'center');
+  z-index: idx.$CHECK_BOX;
+  flex-direction: column;
+  width: 350px;
+  height: 90vh;
+  padding: 30px;
+  background: color.$WRAPPER_BACKGROUND;
+  border-radius: 36px;
+
+  h3 {
+    margin-bottom: 2rem;
+    font-size: 24px;
+  }
+}

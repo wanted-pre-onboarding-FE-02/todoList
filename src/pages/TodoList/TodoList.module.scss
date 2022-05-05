@@ -4,55 +4,19 @@
 @use '../../styles/mixins/animation';
 @use '../../styles/constants/levels' as idx;
 
-.todoWrapper {
-  position: relative;
-  width: 350px;
-  height: 90vh;
-  padding: 60px 30px 0;
-  background: color.$WRAPPER_BACKGROUND;
-  border-radius: 36px;
-  box-shadow: color.$SHADOW -4px 9px 25px -6px;
-
-  h1 {
-    font-size: 28px;
-  }
-}
-
-.headerBtns {
-  margin-bottom: 1rem;
-  @include flexbox.flexbox('between', 'center');
-}
-
-.todoContent {
-  h3 {
-    margin: 0.5rem 0;
-    color: color.$TASKS_TITLE;
-    text-transform: uppercase;
+.todoList {
+  input[type='text'] {
+    width: 100%;
+    height: 30px;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid color.$PURPLE;
+    transition: 0.2s all;
   }
 
-  .categoryInner {
-    @include flexbox.flexbox('between', 'center');
-
-    li {
-      height: 50px;
-      line-height: 50px;
-    }
-  }
-
-  .todoList {
-    input[type='text'] {
-      width: 100%;
-      height: 30px;
-      padding: 0 0.5rem;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid color.$PURPLE;
-      transition: 0.2s all;
-    }
-
-    .todoInner {
-      height: 250px;
-      overflow: scroll;
-    }
+  .todoInner {
+    height: 250px;
+    overflow: scroll;
   }
 }
 
@@ -122,49 +86,4 @@
     color: color.$GRAYA;
     text-decoration: line-through;
   }
-}
-
-.todoEditBtn {
-  width: 30px;
-  height: 100%;
-}
-
-.todoAddBtn {
-  @include position.absolute(auto 30px 30px auto);
-  z-index: idx.$CHECK_ICON;
-  width: 50px;
-  height: 50px;
-  background: color.$PURPLE;
-  border-radius: 50%;
-  box-shadow: color.$PURPLE 1px 2px 8px;
-
-  svg {
-    color: color.$WHITE;
-    transform: translate(8%, 8%);
-  }
-}
-
-.addModal {
-  @include position.relative(auto 30px 496px auto);
-  @include flexbox.flexbox('center', 'center');
-  z-index: idx.$CHECK_BOX;
-  flex-direction: column;
-  width: 350px;
-  height: 90vh;
-  padding: 30px;
-  background: color.$WRAPPER_BACKGROUND;
-  border-radius: 36px;
-
-  h3 {
-    margin-bottom: 2rem;
-    font-size: 24px;
-  }
-}
-
-.addTodoInput {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border-bottom: 2px solid color.$PURPLE;
-  box-shadow: 0 5px 6px -6px color.$PURPLE;
 }

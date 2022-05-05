@@ -1,10 +1,10 @@
-import TodoList from '../pages/TodoList/TodoList'
+import TodoApp from 'pages/TodoApp'
 import styles from './Routes.module.scss'
 
 function App() {
   return (
     <div className={styles.app}>
-      <TodoList />
+      <TodoApp />
     </div>
   )
 }
