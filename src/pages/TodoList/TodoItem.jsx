@@ -1,4 +1,4 @@
-import styles from './TodoList.module.scss'
+import styles from './TodoItem.module.scss'
 import { CheckIcon } from '../../assets/svgs/index'
 import PropTypes from 'prop-types'
 

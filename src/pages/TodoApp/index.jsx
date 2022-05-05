@@ -30,6 +30,8 @@ export default function TodoApp() {
 
   const handleModal = () => {
     setIsVisible((prev) => !prev)
+    setText('')
+    if (isEditing) setIsEditing((prev) => !prev)
   }
 
   const handleAddTodo = useCallback(() => {
@@ -38,16 +40,17 @@ export default function TodoApp() {
       return
     }
 
-    setTodos((prev) =>
-      prev.concat({
+    setTodos((prev) => [
+      {
         id: Date.now(),
         text: text.trim(),
         date: '2020-05-05',
         category: 'green',
         done: false,
         isLike: false,
-      })
-    )
+      },
+      ...prev,
+    ])
     setText('')
     setIsVisible((prev) => !prev)
   }, [text])
@@ -62,12 +65,16 @@ export default function TodoApp() {
   }
 
   const handleEditTodo = () => {
+    // if (text.trim() === '') {
+    //   return
+    // }
+
     setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
-
+  console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
@@ -89,7 +96,7 @@ export default function TodoApp() {
           </button>
         )}
       </div>
-      {isVisible && <Modal text={text} handleChangeText={handleChangeText} />}
+      {isVisible && <Modal text={text} handleChangeText={handleChangeText} handleModal={handleModal} />}
     </div>
   )
 }
