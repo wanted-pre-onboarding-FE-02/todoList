@@ -12,10 +12,6 @@
   background-color: #f8fbfb;
   border-radius: 40px;
 
-  &.on {
-    background-color: rgba(0, 0, 0, 60%);
-  }
-
   h1 {
     margin-bottom: 30px;
     font-size: 30px;
@@ -50,6 +46,9 @@
 
     .checkboxWrap {
       position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
     }
 
     > span {
@@ -57,11 +56,19 @@
     }
 
     .edit {
-      @include position.absolute(0 20px 0 0);
+      @include position.absolute(auto 50px auto auto);
       width: 20px;
       height: 20px;
       font-size: 10px;
       cursor: pointer;
+      fill: blueviolet;
+    }
+
+    .delete {
+      @include position.absolute(auto 20px auto auto);
+      width: 20px;
+      height: 20px;
+      font-size: 10px;
       fill: blueviolet;
     }
   }

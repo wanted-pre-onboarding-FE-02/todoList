@@ -1,5 +1,5 @@
 import styles from './TodoList.module.scss'
-import { CheckIcon, EditIcon } from '../../assets/svgs'
+import { CheckIcon, EditIcon, DeleteIcon } from '../../assets/svgs'
 import { useEffect, useRef, useState } from 'react'
 import TodoAddModal from '../../components/common/Modal/TodoAddModal'
 
@@ -7,23 +7,23 @@ function TodoList() {
   const TODO_ITEM = [
     {
       id: 1,
-      title: 'Jira 셋팅',
+      text: 'Jira 셋팅',
       done: false,
     },
     {
       id: 2,
-      title: 'TIL 쓰기',
+      text: 'TIL 쓰기',
       done: false,
     },
     {
       id: 3,
-      title: '팀 과제 하기',
+      text: '팀 과제 하기',
       done: false,
     },
   ]
 
-  const [todoList, setTodoList] = useState(TODO_ITEM)
-  const [todoEditId, setTodoEditId] = useState('')
+  const [todoList, setTodoList] = useState([])
+  const [todoEdit, setTodoEdit] = useState(false)
   const [todoValue, setTodoValue] = useState('')
   const [showModal, setShowModal] = useState(false)
   const closeRef = useRef()
@@ -33,7 +33,7 @@ function TodoList() {
   }
 
   const createTodoListHandler = () => {
-    setTodoList([...todoList, { id: Date.now(), title: todoValue, done: false }])
+    setTodoList([...todoList, { id: Date.now(), text: todoValue, done: false }])
     setShowModal(false)
   }
 
@@ -46,10 +46,17 @@ function TodoList() {
   }
 
   const editHandler = (todoItemID) => {
-    setTodoEditId(todoItemID)
+    setTodoEdit(true)
   }
 
-  const completeEditHandler = () => {}
+  const editCompletedHandler = () => {
+    setTodoEdit(false)
+  }
+
+  const deleteHandler = (id) => {
+    const newTodo = todoList.filter((item) => item.id !== id)
+    setTodoList(newTodo)
+  }
 
   function closeHandler(e) {
     if (closeRef.current && !closeRef.current.contains(e.target)) {
@@ -72,23 +79,24 @@ function TodoList() {
       <ul>
         {todoList.map((todo) => (
           <li key={`todo-${todo.id}`} className={styles.task}>
-            <div className={styles.checkboxWrap}>
-              {todoEditId === todo.id ? (
-                <>
+            {todoEdit ? (
+              <>
+                <div className={styles.checkboxWrap}>
                   <input type='text' value={todoValue} onChange={todoValueChangeHandler} />
-                  <button type='button' onClick={completeEditHandler}>
-                    확인
-                  </button>
-                </>
-              ) : (
-                <>
+                </div>
+                <EditIcon className={styles.edit} onClick={editCompletedHandler} />
+              </>
+            ) : (
+              <>
+                <div className={styles.checkboxWrap}>
                   <input type='checkbox' />
                   <CheckIcon />
-                  <span>{todo.title}</span>
-                  <EditIcon className={styles.edit} onClick={() => editHandler(todo.id)} />
-                </>
-              )}
-            </div>
+                  <span>{todo.text}</span>
+                </div>
+                <EditIcon className={styles.edit} onClick={() => editHandler(todo.id)} />
+                <DeleteIcon className={styles.delete} onClick={() => deleteHandler(todo.id)} />
+              </>
+            )}
           </li>
         ))}
       </ul>
