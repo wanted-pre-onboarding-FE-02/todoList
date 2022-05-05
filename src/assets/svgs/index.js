@@ -1,2 +1,7 @@
 export { ReactComponent as LogoImage } from './logo.svg'
 export { ReactComponent as CheckIcon } from './check.svg'
+export { ReactComponent as CloseButton } from './CloseButton.svg'
+export { ReactComponent as BinButton } from './BinButton.svg'
+export { ReactComponent as HamburgerButton } from './HamburgerButton.svg'
+export { ReactComponent as SearchButton } from './SearchButton.svg'
+export { ReactComponent as AlarmButton } from './AlarmButton.svg'
