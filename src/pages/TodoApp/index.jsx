@@ -79,7 +79,7 @@ export default function TodoApp() {
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
         <TodoHeader />
-        <TodoCategory />
+        <TodoCategory todos={todos} />
         <TodoList
           todos={todos}
           handleToggle={handleToggle}
