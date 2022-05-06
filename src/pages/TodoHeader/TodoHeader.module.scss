@@ -1,6 +1,14 @@
 @use '../../styles/mixins/flexbox';
+@use '../../styles/constants/colors';
 
 .headerBtns {
   margin-bottom: 1rem;
   @include flexbox.flexbox('between', 'center');
+  border: 2px solid colors.$GRAYD;
+  border-radius: 0.5rem;
+
+  input[type=text] {
+    width: 100%;
+    padding:5px;
+  }
 }

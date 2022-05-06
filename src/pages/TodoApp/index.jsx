@@ -9,6 +9,8 @@ import Modal from '../../components/Modal'
 
 export default function TodoApp() {
   const [todos, setTodos] = useState([...INITIAL_TODO])
+  const [copyTodos, setCopyTodos] = useState(todos)
+  const [filterActive, setFilterActive] = useState(false)
   const [text, setText] = useState('')
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
@@ -17,11 +19,13 @@ export default function TodoApp() {
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
     setTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
+    setCopyTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? {...todo,done:!todo.done}:todo)))
   }
 
   const handleRemove = (e) => {
     const DELETE_ID = parseInt(e.target.dataset.id, 10)
     setTodos((todos) => todos.filter((todo) => todo.id !== DELETE_ID))
+    setCopyTodos((todos) => todos.filter((todo) => todo.id !== DELETE_ID))
   }
 
   const handleChangeText = (e) => {
@@ -51,6 +55,17 @@ export default function TodoApp() {
       },
       ...prev,
     ])
+    setCopyTodos((prev) => [
+      {
+        id: Date.now(),
+        text: text.trim(),
+        date: '2020-05-05',
+        category: 'green',
+        done: false,
+        isLike: false,
+      },
+      ...prev,
+    ])
     setText('')
     setIsVisible((prev) => !prev)
   }, [text])
@@ -70,18 +85,41 @@ export default function TodoApp() {
     // }
 
     setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
+    setCopyTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
-  console.log(isVisible)
+  
+  const handleSearchTodo = (e) => {
+
+    const textFilter = e.currentTarget.value
+  
+    if (textFilter.length === 0) {
+      setFilterActive(false)
+      setCopyTodos(todos)
+    }
+    
+    else {
+      setFilterActive(true)
+      const filterResult = copyTodos.filter(todo => 
+        todo.text.toUpperCase().includes(textFilter.toUpperCase())
+      )
+      setCopyTodos(filterResult)
+    }
+  }
+
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
-        <TodoHeader />
+        <TodoHeader
+          handleSearchTodo={handleSearchTodo}
+        />
         <TodoCategory />
         <TodoList
+          isFilterActive={filterActive}
           todos={todos}
+          copyTodos={copyTodos}
           handleToggle={handleToggle}
           handleEditMode={handleEditMode}
           handleRemove={handleRemove}
