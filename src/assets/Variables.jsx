@@ -7,6 +7,7 @@ export const INITIAL_TODO = [
     category: 'red',
     done: false,
     isLike: true,
+    invisible: false,
   },
   {
     id: 1651747060688,
@@ -15,6 +16,7 @@ export const INITIAL_TODO = [
     category: 'orange',
     done: true,
     isLike: false,
+    invisible: false,
   },
   {
     id: 1651747060689,
@@ -23,6 +25,7 @@ export const INITIAL_TODO = [
     category: 'yellow',
     done: false,
     isLike: true,
+    invisible: false,
   },
   {
     id: 1651747060690,
@@ -31,6 +34,7 @@ export const INITIAL_TODO = [
     category: 'green',
     done: false,
     isLike: false,
+    invisible: false,
   },
   {
     id: 1651747060691,
@@ -39,6 +43,7 @@ export const INITIAL_TODO = [
     category: 'red',
     done: false,
     isLike: false,
+    invisible: false,
   },
   {
     id: 1651747060692,
@@ -47,6 +52,7 @@ export const INITIAL_TODO = [
     category: 'green',
     done: false,
     isLike: true,
+    invisible: false,
   },
   {
     id: 1651747060693,
@@ -55,6 +61,7 @@ export const INITIAL_TODO = [
     category: 'yellow',
     done: true,
     isLike: false,
+    invisible: false,
   },
   {
     id: 1651747060694,
@@ -63,5 +70,6 @@ export const INITIAL_TODO = [
     category: 'orange',
     done: true,
     isLike: true,
+    invisible: false,
   },
 ]

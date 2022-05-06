@@ -48,6 +48,7 @@ export default function TodoApp() {
         category: 'green',
         done: false,
         isLike: false,
+        invisible: false,
       },
       ...prev,
     ])
@@ -74,12 +75,25 @@ export default function TodoApp() {
     setIsVisible((prev) => !prev)
     setText('')
   }
-  console.log(isVisible)
+
+  const handleCategory = ({currentTarget}) => {
+    const category = currentTarget.value
+    if(category){
+      setTodos((todos) => todos.map((todo) => (todo.category === category ? { ...todo, invisible: false } : { ...todo, invisible: true } )))
+    }else{
+      setTodos((todos) => todos.map((todo) =>  ({...todo, invisible: false}) ))
+    }
+
+
+  }
+  // console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
         <TodoHeader />
-        <TodoCategory />
+        <TodoCategory 
+          handleCategory={handleCategory}
+        />
         <TodoList
           todos={todos}
           handleToggle={handleToggle}

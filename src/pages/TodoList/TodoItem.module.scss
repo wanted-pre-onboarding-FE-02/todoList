@@ -64,6 +64,9 @@
   background: color.$WHITE;
   border-radius: 12px;
   @include flexbox.flexbox('between', 'center');
+  &.isHidden{
+    display:none;
+  }
 
   > .checkboxWrapper {
     width: 100%;

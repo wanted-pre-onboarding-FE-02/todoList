@@ -1,12 +1,13 @@
 import styles from './TodoItem.module.scss'
 import { CheckIcon } from '../../assets/svgs/index'
 import PropTypes from 'prop-types'
+import { cx } from '../../styles/index'
 
 export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode }) {
-  const { id, text, done } = todo
+  const { id, text, done, invisible} = todo
 
   return (
-    <li className={styles.todoElement} key={`todo-${id}`}>
+    <li className={cx(styles.todoElement, {[styles.isHidden]:invisible})} key={`todo-${id}`}>
       <div className={styles.checkboxWrapper}>
         <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
         <CheckIcon />
@@ -27,6 +28,7 @@ TodoItem.propTypes = {
     id: PropTypes.number,
     text: PropTypes.string,
     done: PropTypes.bool,
+    invisible: PropTypes.bool,
     // date: PropTypes.string.isRequired,
     // category: PropTypes.string.isRequired,
     // isLike: PropTypes.bool.isRequired,
