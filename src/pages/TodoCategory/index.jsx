@@ -1,30 +1,13 @@
 import styles from './TodoCategory.module.scss'
 import PropTypes from 'prop-types'
-import { useRef, useState } from 'react'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { cx } from 'styles'
 
 export const CATEGORY = ['work', 'exercise', 'study', 'promise', 'etc']
 export default function TodoCategory({ todos }) {
-  const completedTodo = todos.filter((item) => item.done === true)
-
-  const scrollRef = useRef(null)
-  const [isDrag, setIsDrag] = useState(false)
-  const [startX, setStartX] = useState()
-
-  const onDragStart = (e) => {
-    e.preventDefault()
-    setIsDrag(true)
-    setStartX(e.pageX + scrollRef.current.scrollLeft)
-  }
-
-  const onDragEnd = () => {
-    setIsDrag(false)
-  }
-
-  const onDragMove = (e) => {
-    if (isDrag) {
-      scrollRef.current.scrollLeft = startX - e.pageX
-    }
+  const handleCompleted = (category) => {
+    const completedTodo = todos.filter((item) => item.done === true && item.category === category)
+    return completedTodo.length
   }
 
   return (
@@ -35,12 +18,12 @@ export default function TodoCategory({ todos }) {
           {CATEGORY.map((cate) => {
             return (
               <li key={`category-${cate}`}>
-                <span>{cate.length} Tasks</span>
+                <span>{cate.length}Tasks</span>
                 <h4>{cate}</h4>
-                <div>
+                <div className={cx(styles[cate])}>
                   <p
                     style={{
-                      width: `calc(100% / ${todos.length} * ${completedTodo.length} )`,
+                      width: `calc(100% / ${todos.length} * ${handleCompleted(cate)} )`,
                     }}
                   />
                 </div>

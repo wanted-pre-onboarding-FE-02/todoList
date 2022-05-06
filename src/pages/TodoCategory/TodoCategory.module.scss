@@ -44,13 +44,41 @@
     }
 
     > div {
+      &.work {
+        p {
+          background-color: #af52de;
+        }
+      }
+
+      &.exercise {
+        p {
+          background-color: #24d6a1;
+        }
+      }
+
+      &.study {
+        p {
+          background-color: #76e940;
+        }
+      }
+
+      &.promise {
+        p {
+          background-color: #651ea8;
+        }
+      }
+
+      &.etc {
+        p {
+          background-color: #cc2923;
+        }
+      }
+
       p {
         position: absolute;
         left: 0;
         width: 100%;
         height: 100%;
-        content: '';
-        background-color: #af52de;
         transition: 0.3s;
       }
       position: relative;
