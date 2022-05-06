@@ -94,7 +94,7 @@ export default function TodoApp() {
   const handleSearchTodo = (e) => {
 
     const textFilter = e.currentTarget.value
-  
+    console.log(textFilter)
     if (textFilter.length === 0) {
       setFilterActive(false)
       setCopyTodos(todos)
@@ -102,9 +102,10 @@ export default function TodoApp() {
     
     else {
       setFilterActive(true)
-      const filterResult = copyTodos.filter(todo => 
+      const filterResult = todos.filter(todo => 
         todo.text.toUpperCase().includes(textFilter.toUpperCase())
       )
+      console.log(filterResult)
       setCopyTodos(filterResult)
     }
   }
