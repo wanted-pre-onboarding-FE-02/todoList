@@ -21,6 +21,7 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
     return byte
   }
 
+  
   const handleTodoItemMouseEnter = () => {
     console.log(getTextLength(text))
     setHoverItem(true)
