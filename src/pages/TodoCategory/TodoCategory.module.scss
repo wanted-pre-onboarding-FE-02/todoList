@@ -5,6 +5,11 @@
   overflow: auto;
 }
 
+.scrollContainer {
+  height: 100px;
+  padding: 10px 2px;
+}
+
 .categoryInner {
   display: flex;
   justify-content: space-between;
