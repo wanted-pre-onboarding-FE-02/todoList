@@ -13,6 +13,7 @@ export default function TodoApp() {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
+  const [category, setCategory] = useState('work')
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -34,6 +35,10 @@ export default function TodoApp() {
     if (isEditing) setIsEditing((prev) => !prev)
   }
 
+  const handleSaveCategory = (category) => {
+    setCategory(category)
+  }
+
   const handleAddTodo = useCallback(() => {
     if (text.trim() === '') {
       setIsVisible((prev) => !prev)
@@ -45,7 +50,7 @@ export default function TodoApp() {
         id: Date.now(),
         text: text.trim(),
         date: '2020-05-05',
-        category: 'green',
+        category,
         done: false,
         isLike: false,
       },
@@ -53,7 +58,7 @@ export default function TodoApp() {
     ])
     setText('')
     setIsVisible((prev) => !prev)
-  }, [text])
+  }, [category, text])
 
   const handleEditMode = (e) => {
     setIsEditing((prev) => !prev)
@@ -69,12 +74,12 @@ export default function TodoApp() {
     //   return
     // }
 
-    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
+    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, category } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
-  console.log(isVisible)
+
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
@@ -96,7 +101,14 @@ export default function TodoApp() {
           </button>
         )}
       </div>
-      {isVisible && <Modal text={text} handleChangeText={handleChangeText} handleModal={handleModal} />}
+      {isVisible && (
+        <Modal
+          text={text}
+          handleChangeText={handleChangeText}
+          handleModal={handleModal}
+          handleSaveCategory={handleSaveCategory}
+        />
+      )}
     </div>
   )
 }
