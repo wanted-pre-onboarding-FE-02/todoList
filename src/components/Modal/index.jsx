@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import SelectBar from 'pages/TodoCategory/SelectBar'
 import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
@@ -27,7 +28,21 @@ function Modal(props) {
       </div>
     </div>,
     document.getElementById('modal')
+=======
+import PropTypes from 'prop-types'
+
+import styles from './index.module.scss'
+import Portal from 'components/Portal'
+
+export default function Modal({ children }) {
+  return (
+    <Portal>
+      <div className={styles.overlay}>{children}</div>
+    </Portal>
+>>>>>>> kimjunyeop2
   )
 }
 
-export default Modal
+Modal.propTypes = {
+  children: PropTypes.element,
+}
