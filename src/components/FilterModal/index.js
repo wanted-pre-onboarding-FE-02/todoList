@@ -5,7 +5,7 @@ function FilterModal({ onSelectFilter, filterList }) {
   return (
     <div className={styles.modal}>
       {filterList.map((filter) => (
-        <button type='button' className={styles.modal__button} onClick={onSelectFilter}>
+        <button type='button' key={`filter-${filter}`} className={styles.modal__button} onClick={onSelectFilter}>
           {filter}
         </button>
       ))}

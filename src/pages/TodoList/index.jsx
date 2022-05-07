@@ -83,7 +83,6 @@ export default function TodoList({
                 todo //
               ) => (
                 <TodoItem
-                  s
                   handleToggleLike={handleToggleLike}
                   todoIsLike={todoIsLike}
                   todo={todo}

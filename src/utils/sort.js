@@ -47,7 +47,7 @@ export const sortByDic = (a, b) => {
 }
 
 export const sortByDone = (a, b) => {
-  // 사전순
+  // 완료순
   const doneA = a.done
   const doneB = b.done
 
