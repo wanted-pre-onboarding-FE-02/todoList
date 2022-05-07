@@ -13,40 +13,40 @@ const FILTER_LIST = ['최신순', '과거순', '가나다순', '완료순']
 
 export default function TodoList({ todos, handleToggle, handleEditMode, handleRemove }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [sortedTodos, setSortedTodos] = useState(todos)
+  const [sortedTodos, setSortedTodos] = useState(todos) // 정렬된 리스트
 
+  // 모달 토글 핸들러
   const modalToggleHandler = () => {
-    // 모달 토글 핸들러
     setIsModalOpen((prev) => !prev)
   }
 
+  // 필터를 누르면 필터의 값에 따라 정렬됨 => sortedTodos
   const selectFilterHandler = (e) => {
-    // 필터를 누르면 필터의 값에 따라 정렬됨 => sortedTodos
     const filter = e.target.innerText
 
+    // 날짜 오름차순
     if (filter === FILTER_LIST[0]) {
-      // 날짜 오름차순
       setSortedTodos((prevTodos) => {
-        return prevTodos.sort((a, b) => sortByDateAsd(a, b)).slice()
+        return prevTodos.sort((a, b) => sortByDateAsd(a, b)).slice() // 깊은 복사로 set
       })
     }
 
+    // 날짜 내림차순
     if (filter === FILTER_LIST[1]) {
-      // 날짜 내림차순
       setSortedTodos((prevTodos) => {
         return prevTodos.sort((a, b) => sortByDateDsd(a, b)).slice()
       })
     }
 
+    // 가나다순
     if (filter === FILTER_LIST[2]) {
-      // 가나다순
       setSortedTodos((prevTodos) => {
         return prevTodos.sort((a, b) => sortByDic(a, b)).slice()
       })
     }
 
+    // 완료순
     if (filter === FILTER_LIST[3]) {
-      // 완료순
       setSortedTodos((prevTodos) => {
         return prevTodos.sort((a, b) => sortByDone(a, b)).slice()
       })

@@ -74,7 +74,6 @@ export default function TodoApp() {
     setIsVisible((prev) => !prev)
     setText('')
   }
-  console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
