@@ -1,0 +1,14 @@
+.modal {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  font-size: 0;
+  background-color: beige;
+
+  &__button {
+    display: block;
+    width: 100px;
+    height: 20px;
+    background-color: azure;
+  }
+}
