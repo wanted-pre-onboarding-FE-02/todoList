@@ -2,7 +2,6 @@ import styles from './TodoItem.module.scss'
 import { CheckIcon } from '../../assets/svgs/index'
 import PropTypes from 'prop-types'
 import { cx } from 'styles'
-import { useEffect } from 'react'
 
 export default function TodoItem({
   todo,
@@ -13,19 +12,17 @@ export default function TodoItem({
   handleToggle,
   handleRemove,
   handleEditMode,
-  moveDown,
-  index,
+  move,
 }) {
   const { id, text, done } = todo
-
   return (
     <li
       onDragEnter={handleDragEnter}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
-      onDragEnd={(e) => handleDragEnd(e, moveDown)}
+      onDragEnd={handleDragEnd}
       draggable
-      className={cx(styles.todoElement, moveDown ? styles.moveDown : styles.moveUp)}
+      className={cx(styles.todoElement, move ? styles.moveDown : styles.moveUp)}
       key={`todo-${id}`}
       id={id}
     >
@@ -53,8 +50,7 @@ TodoItem.propTypes = {
     // category: PropTypes.string.isRequired,
     // isLike: PropTypes.bool.isRequired,
   }),
-  index: PropTypes.number,
-  moveDown: PropTypes.bool,
+  move: PropTypes.bool,
   handleDragEnter: PropTypes.func,
   handleDragOver: PropTypes.func,
   handleDragStart: PropTypes.func,
