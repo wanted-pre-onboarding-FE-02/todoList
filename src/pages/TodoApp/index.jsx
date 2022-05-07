@@ -24,9 +24,20 @@ export default function TodoApp() {
   const [todoIsLike, setTodoIsLike] = useState(false)
   const [date, setDateFunObj] = useTodoDate()
 
+  // 중요표시 할일 상단고정
+  useEffect(() => {
+    setTodos((prev) => {
+      const fixedTodos = prev.filter((ele) => ele.isLike === true)
+      const remainTodos = prev.filter((ele) => ele.isLike === false)
+      return fixedTodos.concat(remainTodos)
+    })
+  }, [text])
+
   useEffect(() => {
     const dateStr = changeYMD(date)
-    setTodos((prev) => prev.filter((todo) => todo.dateStr === dateStr))
+    setTodos((todos) =>
+      todos.map((todo) => (todo.dateStr === dateStr ? { ...todo, invisible: false } : { ...todo, invisible: true }))
+    )
   }, [date])
 
   const handleToggle = (e) => {
@@ -79,9 +90,10 @@ export default function TodoApp() {
         id: Date.now(),
         text: text.trim(),
         dateStr,
-        category: 'green',
+        category,
         done: false,
         isLike: todoIsLike,
+        invisible: false,
       },
       ...prev,
     ])
@@ -115,12 +127,6 @@ export default function TodoApp() {
   const handleLike = () => {
     setTodoIsLike((prev) => !prev)
   }
-
-  // 중요표시 할일 상단고정
-  useEffect(() => {
-    const fixedTasks = todos.filter((element) => element.isLike === true)
-    setTodos(fixedTasks.concat(todos.filter((element) => element.isLike === false)))
-  }, [text])
 
   const handleSearchTodo = (e) => {
     const textFilter = e.currentTarget.value
