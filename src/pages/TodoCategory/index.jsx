@@ -30,7 +30,8 @@ export default function TodoCategory({ handleCategory, todos }) {
                   <div className={cx(styles[item])}>
                     <p
                       style={{
-                        width: `calc(100% / ${todos.length} * ${handleCompleted(item)} )`,
+                        width:
+                          todos.length !== 0 ? `calc(100% / ${todos.length} * ${handleCompleted(item)} )` : `calc(0%)`,
                       }}
                     />
                   </div>
