@@ -39,7 +39,7 @@ export default function TodoCategory({ handleCategory, todos }) {
                     <p
                       style={{
                         width:
-                          todos.length !== 0 ? `calc(100% / ${handleCategoryTasksCount(item)} * ${handleCompleted(item)} )` : `calc(0%)`,
+                          handleCategoryTasksCount(item) !== 0 ? `calc(100% / ${handleCategoryTasksCount(item)} * ${handleCompleted(item)} )` : `calc(0%)`,
                       }}
                     />
                   </div>
