@@ -7,7 +7,7 @@ import { cx } from '../../styles/index'
 export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode }) {
   const [hoverItem, setHoverItem] = useState(false)
   const itemTextRef = useRef()
-  const { id, text, done, invisible } = todo
+  const { id, text, done, invisible, isLike } = todo
 
   const handleTodoItemMouseEnter = () => {
     if (itemTextRef.current.scrollWidth > itemTextRef.current.offsetWidth) setHoverItem(true)
@@ -17,7 +17,7 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
   }
 
   const handleCategorySave = (e) => {
-    handleEditMode(e,todo)
+    handleEditMode(e, todo)
   }
 
   return (
@@ -29,6 +29,7 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
       >
         <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
         <CheckIcon />
+        {isLike ? '📌' : ''}
         <p ref={itemTextRef}>{text}</p>
         {hoverItem && (
           <div className={styles.todoTooltip}>
@@ -54,7 +55,7 @@ TodoItem.propTypes = {
     invisible: PropTypes.bool,
     // date: PropTypes.string.isRequired,
     // category: PropTypes.string.isRequired,
-    // isLike: PropTypes.bool.isRequired,
+    isLike: PropTypes.bool,
   }),
   handleToggle: PropTypes.func,
   handleRemove: PropTypes.func,

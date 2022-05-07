@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
@@ -12,13 +12,12 @@ export default function TodoApp() {
   const [copyTodos, setCopyTodos] = useState(todos)
   const [filterActive, setFilterActive] = useState(false)
   const [text, setText] = useState('')
+  const [isLike, setIsLike] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
   const [category, setCategory] = useState('work')
-  const [todoCategory , setTodoCategory] = useState('')
-
-  
+  const [todoCategory, setTodoCategory] = useState('')
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -71,15 +70,15 @@ export default function TodoApp() {
         date: '2020-05-05',
         category: 'green',
         done: false,
-        isLike: false,
+        isLike,
       },
       ...prev,
     ])
     setText('')
     setIsVisible((prev) => !prev)
-  }, [category, text])
+  }, [category, text, isLike])
 
-  const handleEditMode = (e,todo) => {
+  const handleEditMode = (e, todo) => {
     setTodoCategory(todo.category)
     setIsEditing((prev) => !prev)
     const EDIT_ID = parseInt(e.target.dataset.id, 10)
@@ -94,22 +93,32 @@ export default function TodoApp() {
     //   return
     // }
 
-    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, category } : todo)))
+    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
 
+  const handleLike = () => {
+    setIsLike((prev) => !prev)
+  }
+
+  // 중요표시 할일 상단고정
+  useEffect(() => {
+    const fixedTasks = todos.filter((element) => element.isLike === true)
+    setTodos(fixedTasks.concat(todos.filter((element) => element.isLike === false)))
+  }, [text])
+
   const handleSearchTodo = (e) => {
     const textFilter = e.currentTarget.value
-    
+
     if (textFilter.length === 0) {
       setFilterActive(false)
       setCopyTodos(todos)
     } else {
       setFilterActive(true)
       const filterResult = todos.filter((todo) => todo.text.toUpperCase().includes(textFilter.toUpperCase()))
-      
+
       setCopyTodos(filterResult)
     }
   }
@@ -126,7 +135,7 @@ export default function TodoApp() {
       )
     }
   }
-  
+
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
@@ -153,7 +162,10 @@ export default function TodoApp() {
       </div>
       {isVisible && (
         <Modal
+          handleLike={handleLike}
           text={text}
+          isLike={isLike}
+          setIsLike={setIsLike}
           todoCategory={todoCategory}
           handleChangeText={handleChangeText}
           handleModal={handleModal}
