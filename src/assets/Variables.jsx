@@ -3,7 +3,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060687,
     text: '방청소하기',
-    date: '2022-05-05',
+    dateStr: '20220505',
     category: 'red',
     done: false,
     isLike: true,
@@ -11,7 +11,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060688,
     text: 'Typescript 강의 듣기',
-    date: '2022-05-05',
+    dateStr: '20220505',
     category: 'orange',
     done: true,
     isLike: false,
@@ -19,7 +19,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060689,
     text: '경주 여행 계획 세우기',
-    date: '2022-05-07',
+    dateStr: '20220507',
     category: 'yellow',
     done: false,
     isLike: true,
@@ -27,7 +27,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060690,
     text: '도서관 책 반납하기',
-    date: '2022-05-14',
+    dateStr: '20220514',
     category: 'green',
     done: false,
     isLike: false,
@@ -35,7 +35,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060691,
     text: '유튜브 새로운 영상 업로드',
-    date: '2022-05-05',
+    dateStr: '20220505',
     category: 'red',
     done: false,
     isLike: false,
@@ -43,7 +43,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060692,
     text: '이사갈 아파트 계약금 송금하기',
-    date: '2022-05-09',
+    dateStr: '20220509',
     category: 'green',
     done: false,
     isLike: true,
@@ -51,7 +51,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060693,
     text: '공과금 납부',
-    date: '2022-05-04',
+    dateStr: '20220504',
     category: 'yellow',
     done: true,
     isLike: false,
@@ -59,7 +59,7 @@ export const INITIAL_TODO = [
   {
     id: 1651747060694,
     text: '이력서 제출하기',
-    date: '2022-05-24',
+    dateStr: '20220524',
     category: 'orange',
     done: true,
     isLike: true,
