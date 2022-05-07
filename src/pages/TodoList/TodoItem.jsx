@@ -1,16 +1,31 @@
+import { useState, useRef } from 'react'
 import styles from './TodoItem.module.scss'
 import { CheckIcon } from '../../assets/svgs/index'
 import PropTypes from 'prop-types'
 
 export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode }) {
+  const [hoverItem, setHoverItem] = useState(false)
+  const itemTextRef=useRef()
+
   const { id, text, done } = todo
+
+  const handleTodoItemMouseEnter = () => { if (itemTextRef.current.scrollWidth > itemTextRef.current.offsetWidth) setHoverItem(true) }
+  const handleTodoItemMouseLeave = () => { setHoverItem(false) }
 
   return (
     <li className={styles.todoElement} key={`todo-${id}`}>
-      <div className={styles.checkboxWrapper}>
+      <div className={styles.checkboxWrapper}
+          onMouseEnter={handleTodoItemMouseEnter}
+          onMouseLeave={handleTodoItemMouseLeave}      
+      >
         <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
         <CheckIcon />
-        <p>{text}</p>
+        <p ref={itemTextRef}>{text}</p>
+        {hoverItem &&
+          <div className={styles.todoTooltip}>
+            <p>{text}</p>
+          </div>
+        }
       </div>
       <button type='button' className={styles.todoEditBtn} data-id={id} onClick={handleEditMode}>
         ✏️

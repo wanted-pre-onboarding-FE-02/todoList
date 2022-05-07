@@ -66,15 +66,32 @@
   @include flexbox.flexbox('between', 'center');
 
   > .checkboxWrapper {
+    position : relative;
     width: 100%;
     @include flexbox.flexbox('start', 'center');
-
+    
     p {
-      max-width: 170px;
+      width: 170px;
       overflow: hidden;
       line-height: 40px;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+    
+    > .todoTooltip {
+      @include position.absolute(0 13px auto auto);
+      width: 78%;
+      background-color: color.$WHITE;
+      border-radius: 12px;
+      box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
+      z-index: 1;
+      
+      p {
+        padding: 5px 4px;
+        text-align: center;
+        line-height: 20px;
+        white-space: normal;
+      }
     }
   }
 
