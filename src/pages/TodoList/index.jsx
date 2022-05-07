@@ -2,10 +2,23 @@ import styles from './TodoList.module.scss'
 import TodoItem from './TodoItem'
 import PropTypes from 'prop-types'
 import useDragDrop from 'hooks/useDragDrop'
+import { useEffect } from 'react'
 
 export default function TodoList({ todos, setTodos, handleToggle, handleEditMode, handleRemove }) {
-  const [handleDragEnd, handleDragEnter, handleDragOver, handleDragStart, handleDrop, todoList, nextIndex] =
-    useDragDrop(todos)
+  const {
+    handleDragEnd,
+    handleDragEnter,
+    handleDragOver,
+    handleDragStart,
+    handleDrop,
+    setTodoList,
+    todoList,
+    nextIndex,
+  } = useDragDrop(todos, setTodos)
+
+  useEffect(() => {
+    setTodoList(todos)
+  }, [todos, setTodoList])
 
   return (
     <section className={styles.todoList}>

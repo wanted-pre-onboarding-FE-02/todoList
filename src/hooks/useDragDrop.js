@@ -1,9 +1,13 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-function useDragDrop(todos) {
+function useDragDrop(todos, setTodos) {
   const [todoList, setTodoList] = useState(todos)
   const [startId, setStartId] = useState(-1)
   const [nextIndex, setNextIndex] = useState(Number.MAX_SAFE_INTEGER)
+
+  useEffect(() => {
+    setTodos(todoList)
+  }, [todoList, setTodos])
 
   const handleDragStart = useCallback((e) => {
     e.stopPropagation()
@@ -58,7 +62,16 @@ function useDragDrop(todos) {
     list.style.display = 'flex'
   }, [])
 
-  return [handleDragEnd, handleDragEnter, handleDragOver, handleDragStart, handleDrop, todoList, nextIndex]
+  return {
+    handleDragEnd,
+    handleDragEnter,
+    handleDragOver,
+    handleDragStart,
+    handleDrop,
+    setTodoList,
+    todoList,
+    nextIndex,
+  }
 }
 
 export default useDragDrop
