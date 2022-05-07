@@ -3,13 +3,14 @@ import { CheckIcon } from '../../assets/svgs/index'
 import PropTypes from 'prop-types'
 
 export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode }) {
-  const { id, text, done } = todo
+  const { id, text, done, isLike } = todo
 
   return (
     <li className={styles.todoElement} key={`todo-${id}`}>
       <div className={styles.checkboxWrapper}>
         <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
         <CheckIcon />
+        {isLike ? '📌' : ''}
         <p>{text}</p>
       </div>
       <button type='button' className={styles.todoEditBtn} data-id={id} onClick={handleEditMode}>
@@ -29,7 +30,7 @@ TodoItem.propTypes = {
     done: PropTypes.bool,
     // date: PropTypes.string.isRequired,
     // category: PropTypes.string.isRequired,
-    // isLike: PropTypes.bool.isRequired,
+    isLike: PropTypes.bool,
   }),
   handleToggle: PropTypes.func,
   handleRemove: PropTypes.func,

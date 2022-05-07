@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
@@ -10,6 +10,7 @@ import Modal from '../../components/Modal'
 export default function TodoApp() {
   const [todos, setTodos] = useState([...INITIAL_TODO])
   const [text, setText] = useState('')
+  const [isLike, setIsLike] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
@@ -47,7 +48,7 @@ export default function TodoApp() {
         date: '2020-05-05',
         category: 'green',
         done: false,
-        isLike: false,
+        isLike,
       },
       ...prev,
     ])
@@ -61,6 +62,7 @@ export default function TodoApp() {
     setSelected(EDIT_ID)
     setIsVisible((prev) => !prev)
     const newText = todos.find((element) => element.id === EDIT_ID).text
+    const newLike = todos.find((element) => element.id === EDIT_ID).isLike
     setText(newText)
   }
 
@@ -69,11 +71,22 @@ export default function TodoApp() {
     //   return
     // }
 
-    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
+    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, isLike } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
+
+  const handleLike = () => {
+    setIsLike((prev) => !prev)
+  }
+
+  // 중요표시 할일 상단고정
+  useEffect(() => {
+    const fixedTasks = todos.filter((element) => element.isLike === true)
+    setTodos(fixedTasks.concat(todos.filter((element) => element.isLike === false)))
+  }, [text])
+
   console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
@@ -96,7 +109,16 @@ export default function TodoApp() {
           </button>
         )}
       </div>
-      {isVisible && <Modal text={text} handleChangeText={handleChangeText} handleModal={handleModal} />}
+      {isVisible && (
+        <Modal
+          text={text}
+          isLike={isLike}
+          setIsLike={setIsLike}
+          handleChangeText={handleChangeText}
+          handleModal={handleModal}
+          handleLike={handleLike}
+        />
+      )}
     </div>
   )
 }
