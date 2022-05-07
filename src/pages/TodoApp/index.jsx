@@ -6,6 +6,7 @@ import TodoList from 'pages/TodoList'
 import TodoHeader from 'pages/TodoHeader'
 import TodoCategory from 'pages/TodoCategory'
 import Modal from '../../components/Modal'
+import { createFuzzyMatcher } from 'utils/createFuzzyMatcher'
 
 export default function TodoApp() {
   const [todos, setTodos] = useState([...INITIAL_TODO])
@@ -94,7 +95,6 @@ export default function TodoApp() {
   const handleSearchTodo = (e) => {
 
     const textFilter = e.currentTarget.value
-    console.log(textFilter)
     if (textFilter.length === 0) {
       setFilterActive(false)
       setCopyTodos(todos)
@@ -102,11 +102,20 @@ export default function TodoApp() {
     
     else {
       setFilterActive(true)
-      const filterResult = todos.filter(todo => 
-        todo.text.toUpperCase().includes(textFilter.toUpperCase())
-      )
-      console.log(filterResult)
-      setCopyTodos(filterResult)
+      if (/[ㄱ-힣]/.test(textFilter)) {
+        const regex = createFuzzyMatcher(textFilter)
+        const resultData = todos.filter(row => {
+          return regex.test(row.text)
+        })
+        setCopyTodos(resultData)
+      }
+
+      else {
+        const filterResult = todos.filter(todo =>
+          todo.text.toUpperCase().includes(textFilter.toUpperCase())
+        )
+        setCopyTodos(filterResult)
+      }
     }
   }
 
