@@ -52,11 +52,11 @@ export const sortByDone = (a, b) => {
   const doneB = b.done
 
   if (doneA < doneB) {
-    return -1
+    return 1
   }
 
   if (doneA > doneB) {
-    return 1
+    return -1
   }
 
   return 0

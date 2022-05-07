@@ -9,36 +9,49 @@ import TodoItem from './TodoItem'
 
 import { sortByDateAsd, sortByDateDsd, sortByDic, sortByDone } from 'utils/sort'
 
-const FILTER_LIST = ['최신순', '과거순', '가나다순']
+const FILTER_LIST = ['최신순', '과거순', '가나다순', '완료순']
 
 export default function TodoList({ todos, handleToggle, handleEditMode, handleRemove }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedFilter, setSelectedFilter] = useState(FILTER_LIST[0])
-  const dateParsedTodos = todos.map((todo) => ({ ...todo, date: Date.parse(todo.date) }))
-  let listMarkup
+  const [sortedTodos, setSortedTodos] = useState(todos)
 
   const modalToggleHandler = () => {
+    // 모달 토글 핸들러
     setIsModalOpen((prev) => !prev)
   }
 
   const selectFilterHandler = (e) => {
+    // 필터를 누르면 필터의 값에 따라 정렬됨 => sortedTodos
     const filter = e.target.innerText
 
-    switch (filter) {
-      case filter === FILTER_LIST[0]:
-        setSelectedFilter(FILTER_LIST[0])
-        break
-      case filter === FILTER_LIST[1]:
-        setSelectedFilter(FILTER_LIST[1])
-        break
-      case filter === FILTER_LIST[2]:
-        setSelectedFilter(FILTER_LIST[2])
-        break
-      default:
-        break
+    if (filter === FILTER_LIST[0]) {
+      // 날짜 오름차순
+      setSortedTodos((prevTodos) => {
+        return prevTodos.sort((a, b) => sortByDateAsd(a, b)).slice()
+      })
+    }
+
+    if (filter === FILTER_LIST[1]) {
+      // 날짜 내림차순
+      setSortedTodos((prevTodos) => {
+        return prevTodos.sort((a, b) => sortByDateDsd(a, b)).slice()
+      })
+    }
+
+    if (filter === FILTER_LIST[2]) {
+      // 가나다순
+      setSortedTodos((prevTodos) => {
+        return prevTodos.sort((a, b) => sortByDic(a, b)).slice()
+      })
+    }
+
+    if (filter === FILTER_LIST[3]) {
+      // 완료순
+      setSortedTodos((prevTodos) => {
+        return prevTodos.sort((a, b) => sortByDone(a, b)).slice()
+      })
     }
   }
-  console.log(todos.sort((a, b) => sortByDateAsd(a, b)))
 
   return (
     <section className={styles.todoList}>
@@ -51,17 +64,15 @@ export default function TodoList({ todos, handleToggle, handleEditMode, handleRe
       </div>
 
       <ul className={styles.todoInner}>
-        {todos
-          .sort((a, b) => sortByDone(a, b))
-          .map((todo) => (
-            <TodoItem
-              todo={todo}
-              key={`todo-${todo.id}`}
-              handleToggle={handleToggle}
-              handleEditMode={handleEditMode}
-              handleRemove={handleRemove}
-            />
-          ))}
+        {sortedTodos.map((todo) => (
+          <TodoItem
+            todo={todo}
+            key={`todo-${todo.id}`}
+            handleToggle={handleToggle}
+            handleEditMode={handleEditMode}
+            handleRemove={handleRemove}
+          />
+        ))}
       </ul>
     </section>
   )
