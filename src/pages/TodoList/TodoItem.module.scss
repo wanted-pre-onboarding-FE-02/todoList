@@ -63,6 +63,7 @@
   line-height: 40px;
   background: color.$WHITE;
   border-radius: 12px;
+  user-select: none;
   @include flexbox.flexbox('between', 'center');
 
   > .checkboxWrapper {
@@ -142,6 +143,17 @@
     color: color.$WHITE;
     transform: translate(8%, 8%);
   }
+}
+
+.moveDown {
+  transition: all .3s;
+  transform: translateY(35px);
+}
+
+.moveUp {
+  transition: all .3s;
+  transform: translateY(0);
+
 }
 
 // .addModal {
