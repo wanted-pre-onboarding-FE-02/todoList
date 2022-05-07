@@ -108,12 +108,14 @@ export default function TodoApp() {
 
   const handleCategory = ({ currentTarget }) => {
     const category = currentTarget.value
+    if (category === 'all') {
+      setTodos((todos) => todos.map((todo) => ({ ...todo, invisible: false })))
+      return
+    }
     if (category) {
       setTodos((todos) =>
         todos.map((todo) => (todo.category === category ? { ...todo, invisible: false } : { ...todo, invisible: true }))
       )
-    } else {
-      setTodos((todos) => todos.map((todo) => ({ ...todo, invisible: false })))
     }
   }
   // console.log(isVisible)
@@ -121,7 +123,8 @@ export default function TodoApp() {
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
         <TodoHeader handleSearchTodo={handleSearchTodo} />
-        <TodoCategory handleCategory={handleCategory} />
+        <TodoCategory handleCategory={handleCategory} todos={todos} />
+
         <TodoList
           isFilterActive={filterActive}
           todos={todos}
