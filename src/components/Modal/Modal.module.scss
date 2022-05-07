@@ -30,6 +30,10 @@
     transform: translate(0%, 50%);
   }
 
+  .pin {
+    @include position.absolute(0 250px 70px);
+  }
+
   .addTodoInput {
     width: 100%;
     padding: 10px;
