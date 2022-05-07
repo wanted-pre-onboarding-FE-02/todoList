@@ -1,18 +1,25 @@
+import SelectBar from 'pages/TodoCategory/SelectBar'
 import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import styles from './Modal.module.scss'
+import { PinIcon, PinFixedIcon } from '../../assets/svgs'
 
 function Modal(props) {
   const focusRef = useRef()
+
   useEffect(() => {
     focusRef.current.focus()
   }, [])
-  const { text, handleChangeText, handleModal } = props
+  const { text, handleChangeText, handleModal, handleSaveCategory, todoCategory, handleLike, todoIsLike } = props
 
   return ReactDOM.createPortal(
     <div className={styles.addModal}>
+      <SelectBar handleSaveCategory={handleSaveCategory} todoCategory={todoCategory} />
       <button type='button' className={styles.closeBtn} onClick={handleModal}>
         X
+      </button>
+      <button type='button' className={styles.pin} onClick={handleLike}>
+        {todoIsLike ? <PinFixedIcon /> : <PinIcon />}
       </button>
       <div className={styles.inputBlock}>
         <h3>Today&#39;s task is...</h3>
