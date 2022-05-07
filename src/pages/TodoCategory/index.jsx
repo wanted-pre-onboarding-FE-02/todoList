@@ -16,7 +16,7 @@ export default function TodoCategory({ handleCategory, todos }) {
     return completedTodo.length
   }
 
-  const handleCategoryTasks = (category) => {
+  const handleCategoryTasksCount = (category) => {
     if (category === 'all') {
       return todos.length
     }
@@ -33,13 +33,13 @@ export default function TodoCategory({ handleCategory, todos }) {
             return (
               <li key={item}>
                 <button type='button' onClick={handleCategory} value={item}>
-                  <span>{handleCategoryTasks(item)}Tasks</span>
+                  <span>{handleCategoryTasksCount(item)}Tasks</span>
                   <h4>{item}</h4>
                   <div className={cx(styles[item])}>
                     <p
                       style={{
                         width:
-                          todos.length !== 0 ? `calc(100% / ${todos.length} * ${handleCompleted(item)} )` : `calc(0%)`,
+                          todos.length !== 0 ? `calc(100% / ${handleCategoryTasksCount(item)} * ${handleCompleted(item)} )` : `calc(0%)`,
                       }}
                     />
                   </div>
