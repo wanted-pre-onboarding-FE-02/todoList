@@ -12,12 +12,12 @@ export default function TodoApp() {
   const [copyTodos, setCopyTodos] = useState(todos)
   const [filterActive, setFilterActive] = useState(false)
   const [text, setText] = useState('')
-  const [isLike, setIsLike] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
   const [category, setCategory] = useState('work')
   const [todoCategory, setTodoCategory] = useState('')
+  const [todoIsLike, setTodoIsLike] = useState(false)
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -58,7 +58,7 @@ export default function TodoApp() {
         date: '2020-05-05',
         category,
         done: false,
-        isLike: false,
+        isLike: todoIsLike,
         invisible: false,
       },
       ...prev,
@@ -70,13 +70,13 @@ export default function TodoApp() {
         date: '2020-05-05',
         category: 'green',
         done: false,
-        isLike,
+        isLike: todoIsLike,
       },
       ...prev,
     ])
     setText('')
     setIsVisible((prev) => !prev)
-  }, [category, text, isLike])
+  }, [category, text, todoIsLike])
 
   const handleEditMode = (e, todo) => {
     setTodoCategory(todo.category)
@@ -88,19 +88,25 @@ export default function TodoApp() {
     setText(newText)
   }
 
+  const handleToggleLike = (e, todo) => {
+    setTodoIsLike(todo.isLike)
+  }
+
   const handleEditTodo = () => {
     // if (text.trim() === '') {
     //   return
     // }
 
-    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike } : todo)))
+    setTodos((todos) =>
+      todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike: todoIsLike } : todo))
+    )
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
 
   const handleLike = () => {
-    setIsLike((prev) => !prev)
+    setTodoIsLike((prev) => !prev)
   }
 
   // 중요표시 할일 상단고정
@@ -143,10 +149,12 @@ export default function TodoApp() {
         <TodoCategory handleCategory={handleCategory} todos={todos} />
 
         <TodoList
+          todoIsLike={todoIsLike}
           isFilterActive={filterActive}
           todos={todos}
           copyTodos={copyTodos}
           handleToggle={handleToggle}
+          handleToggleLike={handleToggleLike}
           handleEditMode={handleEditMode}
           handleRemove={handleRemove}
         />
@@ -162,10 +170,11 @@ export default function TodoApp() {
       </div>
       {isVisible && (
         <Modal
+          todoIsLike={todoIsLike}
           handleLike={handleLike}
           text={text}
-          isLike={isLike}
-          setIsLike={setIsLike}
+          // isLike={isLike}
+          // setIsLike={setIsLike}
           todoCategory={todoCategory}
           handleChangeText={handleChangeText}
           handleModal={handleModal}

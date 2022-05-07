@@ -6,12 +6,11 @@ import { PinIcon, PinFixedIcon } from '../../assets/svgs'
 
 function Modal(props) {
   const focusRef = useRef()
+
   useEffect(() => {
     focusRef.current.focus()
   }, [])
-  const { text, handleChangeText, handleModal, handleSaveCategory, todoCategory, isLike, handleLike } = props
-
-  console.log(isLike)
+  const { text, handleChangeText, handleModal, handleSaveCategory, todoCategory, handleLike, todoIsLike } = props
 
   return ReactDOM.createPortal(
     <div className={styles.addModal}>
@@ -20,7 +19,7 @@ function Modal(props) {
         X
       </button>
       <button type='button' className={styles.pin} onClick={handleLike}>
-        {isLike ? <PinFixedIcon /> : <PinIcon />}
+        {todoIsLike ? <PinFixedIcon /> : <PinIcon />}
       </button>
       <div className={styles.inputBlock}>
         <h3>Today&#39;s task is...</h3>

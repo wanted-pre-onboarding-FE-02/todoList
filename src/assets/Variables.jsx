@@ -67,7 +67,7 @@ export const INITIAL_TODO = [
     id: 1651747060694,
     text: '이력서 제출하기',
     date: '2022-05-24',
-    category: 'wrok',
+    category: 'work',
     done: true,
     isLike: true,
     invisible: false,

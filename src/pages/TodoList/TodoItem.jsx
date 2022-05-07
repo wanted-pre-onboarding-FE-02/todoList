@@ -4,7 +4,7 @@ import { CheckIcon } from '../../assets/svgs/index'
 import PropTypes from 'prop-types'
 import { cx } from '../../styles/index'
 
-export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode }) {
+export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode, handleToggleLike }) {
   const [hoverItem, setHoverItem] = useState(false)
   const itemTextRef = useRef()
   const { id, text, done, invisible, isLike } = todo
@@ -20,6 +20,11 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
     handleEditMode(e, todo)
   }
 
+  const handleIsLikeSave = (e) => {
+    handleToggle(e)
+    handleToggleLike(e, todo)
+  }
+
   return (
     <li className={cx(styles.todoElement, { [styles.isHidden]: invisible })} key={`todo-${id}`}>
       <div
@@ -27,7 +32,7 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
         onMouseEnter={handleTodoItemMouseEnter}
         onMouseLeave={handleTodoItemMouseLeave}
       >
-        <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
+        <input type='checkbox' checked={done} data-id={id} onChange={handleIsLikeSave} />
         <CheckIcon />
         {isLike ? '📌' : ''}
         <p ref={itemTextRef}>{text}</p>
@@ -57,6 +62,7 @@ TodoItem.propTypes = {
     // category: PropTypes.string.isRequired,
     isLike: PropTypes.bool,
   }),
+  handleToggleLike: PropTypes.func,
   handleToggle: PropTypes.func,
   handleRemove: PropTypes.func,
   handleEditMode: PropTypes.func,

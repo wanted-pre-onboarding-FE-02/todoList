@@ -7,7 +7,7 @@ const CATEGORY = ['work', 'exercise', 'study', 'promise', 'etc']
 function SelectBar(props) {
   const { handleSaveCategory, todoCategory } = props
   const [visibleSelectBar, setVisibleSelectBar] = useState(false)
-  const [selectItem, setSelectItem] = useState(todoCategory)
+  const [selectItem, setSelectItem] = useState(todoCategory || 'work')
 
   const handleVisibleSelectBar = () => {
     setVisibleSelectBar((prev) => !prev)
