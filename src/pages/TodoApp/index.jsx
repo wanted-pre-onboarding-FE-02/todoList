@@ -15,6 +15,10 @@ export default function TodoApp() {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
+  const [category, setCategory] = useState('work')
+  const [todoCategory , setTodoCategory] = useState('')
+
+  
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -38,6 +42,10 @@ export default function TodoApp() {
     if (isEditing) setIsEditing((prev) => !prev)
   }
 
+  const handleSaveCategory = (category) => {
+    setCategory(category)
+  }
+
   const handleAddTodo = useCallback(() => {
     if (text.trim() === '') {
       setIsVisible((prev) => !prev)
@@ -49,7 +57,7 @@ export default function TodoApp() {
         id: Date.now(),
         text: text.trim(),
         date: '2020-05-05',
-        category: 'green',
+        category,
         done: false,
         isLike: false,
         invisible: false,
@@ -69,9 +77,10 @@ export default function TodoApp() {
     ])
     setText('')
     setIsVisible((prev) => !prev)
-  }, [text])
+  }, [category, text])
 
-  const handleEditMode = (e) => {
+  const handleEditMode = (e,todo) => {
+    setTodoCategory(todo.category)
     setIsEditing((prev) => !prev)
     const EDIT_ID = parseInt(e.target.dataset.id, 10)
     setSelected(EDIT_ID)
@@ -85,8 +94,7 @@ export default function TodoApp() {
     //   return
     // }
 
-    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
-    setCopyTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
+    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, category } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
@@ -94,14 +102,14 @@ export default function TodoApp() {
 
   const handleSearchTodo = (e) => {
     const textFilter = e.currentTarget.value
-    console.log(textFilter)
+    
     if (textFilter.length === 0) {
       setFilterActive(false)
       setCopyTodos(todos)
     } else {
       setFilterActive(true)
       const filterResult = todos.filter((todo) => todo.text.toUpperCase().includes(textFilter.toUpperCase()))
-      console.log(filterResult)
+      
       setCopyTodos(filterResult)
     }
   }
@@ -118,7 +126,7 @@ export default function TodoApp() {
       )
     }
   }
-  // console.log(isVisible)
+  
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
@@ -143,7 +151,15 @@ export default function TodoApp() {
           </button>
         )}
       </div>
-      {isVisible && <Modal text={text} handleChangeText={handleChangeText} handleModal={handleModal} />}
+      {isVisible && (
+        <Modal
+          text={text}
+          todoCategory={todoCategory}
+          handleChangeText={handleChangeText}
+          handleModal={handleModal}
+          handleSaveCategory={handleSaveCategory}
+        />
+      )}
     </div>
   )
 }

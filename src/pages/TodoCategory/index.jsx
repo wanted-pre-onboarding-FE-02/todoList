@@ -16,7 +16,6 @@ export default function TodoCategory({ handleCategory, todos }) {
     return completedTodo.length
   }
 
-  console.log(handleCompleted('all'))
   return (
     <section className={styles.categoryWraper}>
       <h3>category</h3>

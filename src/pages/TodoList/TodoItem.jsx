@@ -16,6 +16,10 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
     setHoverItem(false)
   }
 
+  const handleCategorySave = (e) => {
+    handleEditMode(e,todo)
+  }
+
   return (
     <li className={cx(styles.todoElement, { [styles.isHidden]: invisible })} key={`todo-${id}`}>
       <div
@@ -32,7 +36,7 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
           </div>
         )}
       </div>
-      <button type='button' className={styles.todoEditBtn} data-id={id} onClick={handleEditMode}>
+      <button type='button' className={styles.todoEditBtn} data-id={id} onClick={handleCategorySave}>
         ✏️
       </button>
       <button type='button' className={styles.todoDeleteBtn} data-id={id} onClick={handleRemove}>

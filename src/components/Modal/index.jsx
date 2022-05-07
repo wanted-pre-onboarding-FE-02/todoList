@@ -1,3 +1,4 @@
+import SelectBar from 'pages/TodoCategory/SelectBar'
 import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import styles from './Modal.module.scss'
@@ -7,10 +8,11 @@ function Modal(props) {
   useEffect(() => {
     focusRef.current.focus()
   }, [])
-  const { text, handleChangeText, handleModal } = props
+  const { text, handleChangeText, handleModal, handleSaveCategory, todoCategory } = props
 
   return ReactDOM.createPortal(
     <div className={styles.addModal}>
+      <SelectBar handleSaveCategory={handleSaveCategory} todoCategory={todoCategory} />
       <button type='button' className={styles.closeBtn} onClick={handleModal}>
         X
       </button>
