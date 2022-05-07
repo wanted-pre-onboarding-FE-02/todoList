@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react'
 import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
-import styles from './TodoApp.module.scss'
 import { changeYMD } from 'utils'
 
 import TodoList from 'pages/TodoList'
@@ -105,7 +104,9 @@ export default function TodoApp() {
   }
 
   const handleEditTodo = () => {
-    setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike: todoIsLike } : todo)))
+    setTodos((todos) =>
+      todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike: todoIsLike } : todo))
+    )
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
@@ -152,7 +153,7 @@ export default function TodoApp() {
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
-      <TodoHeader handleSearchTodo={handleSearchTodo} />
+        <TodoHeader handleSearchTodo={handleSearchTodo} />
         <TodoCategory handleCategory={handleCategory} todos={todos} />
         <TodoDate date={date} {...setDateFunObj} />
         <TodoList

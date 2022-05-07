@@ -53,6 +53,10 @@
       box-shadow: 0 5px 6px -6px colors.$PURPLE;
     }
   }
+
+  .pin {
+    @include position.absolute(0 80px 80px auto);
+  }
 }
 
 .calWrapper {

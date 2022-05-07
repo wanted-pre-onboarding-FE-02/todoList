@@ -2,14 +2,26 @@ import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { changeDateForm } from 'utils'
 import styles from './index.module.scss'
+import { PinIcon, PinFixedIcon } from 'assets/svgs'
 
 import Portal from 'components/Portal'
 import Modal from 'components/Modal'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import useOnClickOutside from 'hooks/useOnClickOutside'
+import SelectBar from 'pages/TodoCategory/SelectBar'
 
-export default function TodoCreate({ text, date, handleChangeText, handleModal, handleCalChange }) {
+export default function TodoInput({
+  text,
+  date,
+  todoCategory,
+  todoIsLike,
+  handleLike,
+  handleChangeText,
+  handleModal,
+  handleCalChange,
+  handleSaveCategory,
+}) {
   const ref = useRef()
   const [isCalendar, setIsCalendar] = useState(false)
   useOnClickOutside(ref, () => setIsCalendar(false))
@@ -26,8 +38,12 @@ export default function TodoCreate({ text, date, handleChangeText, handleModal, 
   return (
     <Portal>
       <div className={styles.wrapper}>
+        <SelectBar handleSaveCategory={handleSaveCategory} todoCategory={todoCategory} />
         <button type='button' className={styles.closeBtn} onClick={handleModal}>
           X
+        </button>
+        <button type='button' className={styles.pin} onClick={handleLike}>
+          {todoIsLike ? <PinFixedIcon /> : <PinIcon />}
         </button>
         <div className={styles.formWrapper}>
           <button type='button' className={styles.date} onClick={handleContentClick}>
@@ -47,9 +63,13 @@ export default function TodoCreate({ text, date, handleChangeText, handleModal, 
   )
 }
 
-TodoCreate.propTypes = {
+TodoInput.propTypes = {
   text: PropTypes.string,
   date: PropTypes.instanceOf(Date),
+  todoIsLike: PropTypes.bool,
+  todoCategory: PropTypes.string,
+  handleLike: PropTypes.func,
+  handleSaveCategory: PropTypes.func,
   handleChangeText: PropTypes.func,
   handleModal: PropTypes.func,
   handleCalChange: PropTypes.func,

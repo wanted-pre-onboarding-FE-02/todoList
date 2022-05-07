@@ -70,7 +70,7 @@ export default function TodoList({
     <section className={styles.todoList}>
       {isModalOpen && <FilterModal onSelectFilter={selectFilterHandler} filterList={FILTER_LIST} />}
       <div className={styles.header}>
-        <h3>Today&#39;s tasks</h3>
+        <h3>tasks</h3>
         <button type='button' onClick={modalToggleHandler}>
           <Filter className={styles.header__icon} />
         </button>
