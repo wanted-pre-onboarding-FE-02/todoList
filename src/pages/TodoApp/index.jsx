@@ -74,6 +74,7 @@ export default function TodoApp() {
     setIsVisible((prev) => !prev)
     setText('')
   }
+  console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
@@ -81,7 +82,6 @@ export default function TodoApp() {
         <TodoCategory />
         <TodoList
           todos={todos}
-          setTodos={setTodos}
           handleToggle={handleToggle}
           handleEditMode={handleEditMode}
           handleRemove={handleRemove}

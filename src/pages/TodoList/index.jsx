@@ -1,34 +1,22 @@
 import styles from './TodoList.module.scss'
 import TodoItem from './TodoItem'
 import PropTypes from 'prop-types'
-import useDragDrop from 'hooks/useDragDrop'
 
-export default function TodoList({ todos, setTodos, handleToggle, handleEditMode, handleRemove }) {
-  const [handleDragEnd, handleDragEnter, handleDragOver, handleDragStart, handleDrop, todoList, nextIndex] =
-    useDragDrop(todos)
-
+export default function TodoList({ todos, handleToggle, handleEditMode, handleRemove }) {
   return (
     <section className={styles.todoList}>
       <h3>Today&#39;s tasks</h3>
-      <ul onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} className={styles.todoInner}>
-        {todoList.map((todo, index) => {
-          return (
-            <TodoItem
-              move={nextIndex < index}
-              todo={todo}
-              todoList={todoList}
-              setTodos={setTodos}
-              key={`todo-${todo.id}`}
-              handleToggle={handleToggle}
-              handleEditMode={handleEditMode}
-              handleRemove={handleRemove}
-              handleDragEnter={handleDragEnter}
-              handleDragOver={handleDragOver}
-              handleDragStart={handleDragStart}
-              handleDragEnd={handleDragEnd}
-            />
-          )
-        })}
+
+      <ul className={styles.todoInner}>
+        {todos.map((todo) => (
+          <TodoItem
+            todo={todo}
+            key={`todo-${todo.id}`}
+            handleToggle={handleToggle}
+            handleEditMode={handleEditMode}
+            handleRemove={handleRemove}
+          />
+        ))}
       </ul>
     </section>
   )
@@ -45,7 +33,6 @@ TodoList.propTypes = {
       isLike: PropTypes.bool,
     })
   ),
-  setTodos: PropTypes.func,
   handleToggle: PropTypes.func,
   handleEditMode: PropTypes.func,
   handleRemove: PropTypes.func,
