@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import styles from './TodoList.module.scss'
@@ -11,9 +11,23 @@ import { sortByDateAsd, sortByDateDsd, sortByDic, sortByDone } from 'utils/sort'
 
 const FILTER_LIST = ['최신순', '과거순', '가나다순', '완료순']
 
-export default function TodoList({ todos, handleToggle, handleEditMode, handleRemove }) {
+export default function TodoList({
+  isFilterActive,
+  todos,
+  copyTodos,
+  handleToggle,
+  handleEditMode,
+  handleRemove,
+  todoIsLike,
+  handleToggleLike,
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [sortedTodos, setSortedTodos] = useState(todos) // 정렬된 리스트
+
+  useEffect(() => {
+    // todo가 바뀌면 재랜더링
+    setSortedTodos(todos)
+  }, [setSortedTodos, todos])
 
   // 모달 토글 핸들러
   const modalToggleHandler = () => {
@@ -52,7 +66,6 @@ export default function TodoList({ todos, handleToggle, handleEditMode, handleRe
       })
     }
   }
-
   return (
     <section className={styles.todoList}>
       {isModalOpen && <FilterModal onSelectFilter={selectFilterHandler} filterList={FILTER_LIST} />}
@@ -64,21 +77,45 @@ export default function TodoList({ todos, handleToggle, handleEditMode, handleRe
       </div>
 
       <ul className={styles.todoInner}>
-        {sortedTodos.map((todo) => (
-          <TodoItem
-            todo={todo}
-            key={`todo-${todo.id}`}
-            handleToggle={handleToggle}
-            handleEditMode={handleEditMode}
-            handleRemove={handleRemove}
-          />
-        ))}
+        {isFilterActive
+          ? copyTodos.map(
+              (
+                todo //
+              ) => (
+                <TodoItem
+                  s
+                  handleToggleLike={handleToggleLike}
+                  todoIsLike={todoIsLike}
+                  todo={todo}
+                  key={`todo-${todo.id}`}
+                  handleToggle={handleToggle}
+                  handleEditMode={handleEditMode}
+                  handleRemove={handleRemove}
+                />
+              )
+            )
+          : sortedTodos.map(
+              (
+                todo //
+              ) => (
+                <TodoItem
+                  handleToggleLike={handleToggleLike}
+                  todoIsLike={todoIsLike}
+                  todo={todo}
+                  key={`todo-${todo.id}`}
+                  handleToggle={handleToggle}
+                  handleEditMode={handleEditMode}
+                  handleRemove={handleRemove}
+                />
+              )
+            )}
       </ul>
     </section>
   )
 }
 
 TodoList.propTypes = {
+  isFilterActive: PropTypes.bool,
   todos: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -89,6 +126,18 @@ TodoList.propTypes = {
       isLike: PropTypes.bool,
     })
   ),
+  copyTodos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string,
+      date: PropTypes.string,
+      category: PropTypes.string,
+      done: PropTypes.bool,
+      isLike: PropTypes.bool,
+    })
+  ),
+  handleToggleLike: PropTypes.func,
+  todoIsLike: PropTypes.bool,
   handleToggle: PropTypes.func,
   handleEditMode: PropTypes.func,
   handleRemove: PropTypes.func,
