@@ -1,15 +1,11 @@
-import { useCallback, useState, useEffect } from 'react'
-import { changeYMD } from 'utils'
+import { useCallback, useState } from 'react'
+import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
-import styles from './TodoApp.module.scss'
-
 import TodoList from 'pages/TodoList'
 import TodoHeader from 'pages/TodoHeader'
 import TodoCategory from 'pages/TodoCategory'
-import TodoDate from 'pages/TodoDate'
-import TodoInput from 'pages/TodoInput'
-import useTodoDate from 'hooks/useTodoDate'
+import Modal from '../../components/Modal'
 
 export default function TodoApp() {
   const [todos, setTodos] = useState([...INITIAL_TODO])
@@ -17,12 +13,6 @@ export default function TodoApp() {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [selected, setSelected] = useState(0)
-  const [date, setDateFunObj] = useTodoDate()
-
-  useEffect(() => {
-    const dateStr = changeYMD(date)
-    setTodos((prev) => prev.filter((todo) => todo.dateStr === dateStr))
-  }, [date])
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -50,12 +40,11 @@ export default function TodoApp() {
       return
     }
 
-    const dateStr = changeYMD(date)
     setTodos((prev) => [
       {
         id: Date.now(),
         text: text.trim(),
-        dateStr,
+        date: '2020-05-05',
         category: 'green',
         done: false,
         isLike: false,
@@ -64,7 +53,7 @@ export default function TodoApp() {
     ])
     setText('')
     setIsVisible((prev) => !prev)
-  }, [date, text])
+  }, [text])
 
   const handleEditMode = (e) => {
     setIsEditing((prev) => !prev)
@@ -76,18 +65,21 @@ export default function TodoApp() {
   }
 
   const handleEditTodo = () => {
+    // if (text.trim() === '') {
+    //   return
+    // }
+
     setTodos((todos) => todos.map((todo) => (todo.id === selected ? { ...todo, text } : todo)))
     setIsEditing(false)
     setIsVisible((prev) => !prev)
     setText('')
   }
-  const { handleCalChange } = setDateFunObj
+  console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
         <TodoHeader />
         <TodoCategory />
-        <TodoDate date={date} {...setDateFunObj} />
         <TodoList
           todos={todos}
           handleToggle={handleToggle}
@@ -104,15 +96,7 @@ export default function TodoApp() {
           </button>
         )}
       </div>
-      {isVisible && (
-        <TodoInput
-          text={text}
-          date={date}
-          handleChangeText={handleChangeText}
-          handleModal={handleModal}
-          handleCalChange={handleCalChange}
-        />
-      )}
+      {isVisible && <Modal text={text} handleChangeText={handleChangeText} handleModal={handleModal} />}
     </div>
   )
 }
