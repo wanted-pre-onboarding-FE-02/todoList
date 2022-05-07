@@ -16,6 +16,14 @@ export default function TodoCategory({ handleCategory, todos }) {
     return completedTodo.length
   }
 
+  const handleCategoryTasks = (category) => {
+    if (category === 'all') {
+      return todos.length
+    }
+    const categoryTasks = todos.filter((item) => item.category === category)
+    return categoryTasks.length
+  }
+
   return (
     <section className={styles.categoryWraper}>
       <h3>category</h3>
@@ -25,7 +33,7 @@ export default function TodoCategory({ handleCategory, todos }) {
             return (
               <li key={item}>
                 <button type='button' onClick={handleCategory} value={item}>
-                  <span>{item.length}Tasks</span>
+                  <span>{handleCategoryTasks(item)}Tasks</span>
                   <h4>{item}</h4>
                   <div className={cx(styles[item])}>
                     <p
