@@ -19,7 +19,7 @@ export default function TodoApp() {
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
     setTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
-    setCopyTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? {...todo,done:!todo.done}:todo)))
+    setCopyTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
   }
 
   const handleRemove = (e) => {
@@ -52,6 +52,7 @@ export default function TodoApp() {
         category: 'green',
         done: false,
         isLike: false,
+        invisible: false,
       },
       ...prev,
     ])
@@ -90,33 +91,37 @@ export default function TodoApp() {
     setIsVisible((prev) => !prev)
     setText('')
   }
-  
-  const handleSearchTodo = (e) => {
 
+  const handleSearchTodo = (e) => {
     const textFilter = e.currentTarget.value
     console.log(textFilter)
     if (textFilter.length === 0) {
       setFilterActive(false)
       setCopyTodos(todos)
-    }
-    
-    else {
+    } else {
       setFilterActive(true)
-      const filterResult = todos.filter(todo => 
-        todo.text.toUpperCase().includes(textFilter.toUpperCase())
-      )
+      const filterResult = todos.filter((todo) => todo.text.toUpperCase().includes(textFilter.toUpperCase()))
       console.log(filterResult)
       setCopyTodos(filterResult)
     }
   }
 
+  const handleCategory = ({ currentTarget }) => {
+    const category = currentTarget.value
+    if (category) {
+      setTodos((todos) =>
+        todos.map((todo) => (todo.category === category ? { ...todo, invisible: false } : { ...todo, invisible: true }))
+      )
+    } else {
+      setTodos((todos) => todos.map((todo) => ({ ...todo, invisible: false })))
+    }
+  }
+  // console.log(isVisible)
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
-        <TodoHeader
-          handleSearchTodo={handleSearchTodo}
-        />
-        <TodoCategory />
+        <TodoHeader handleSearchTodo={handleSearchTodo} />
+        <TodoCategory handleCategory={handleCategory} />
         <TodoList
           isFilterActive={filterActive}
           todos={todos}
