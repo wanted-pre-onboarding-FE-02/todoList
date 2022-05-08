@@ -110,6 +110,7 @@ export default function TodoApp() {
     setIsVisible((prev) => !prev)
     const newText = todos.find((element) => element.id === EDIT_ID).text
     setText(newText)
+    setTodoIsLike(todo.isLike)
   }
 
   const handleToggleLike = (e, todo) => {
