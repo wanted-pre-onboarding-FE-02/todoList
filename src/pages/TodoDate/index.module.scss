@@ -10,7 +10,7 @@
   padding: 0 10px;
   margin: 15px 0;
   line-height: 40px;
-  background-color: colors.$GRAYE;
+  background-color: #eef0fc;
   border-radius: 10px;
 
   &:hover .arrow {
@@ -19,8 +19,8 @@
 
   .arrow {
     position: relative;
-    width: 15px;
-    height: 15px;
+    width: 11px;
+    height: 11px;
     opacity: 0;
     transition: 0.3s;
 
@@ -29,8 +29,8 @@
       width: 100%;
       height: 100%;
       content: '';
-      border-top: 4px solid colors.$BLACK;
-      border-right: 4px solid colors.$BLACK;
+      border-top: 2px solid #b2b2b2;
+      border-right: 2px solid #b2b2b2;
     }
   }
 
@@ -43,23 +43,24 @@
   }
 
   .content {
-    font-size: 1.15rem;
+    font-size: 0.85rem;
 
     &:hover {
-      color: colors.$WHITE;
-      background-color: colors.$BLACK;
+      background-color: colors.$GRAYE;
     }
   }
 
   .calWrapper {
     position: absolute;
-    z-index: 10;
     top: 45px;
     left: 50%;
+    z-index: 10;
     transform: translateX(-50%);
 
     .calendar {
-      width: 255px;
+      width: 290px;
+      padding: 10px;
+      border: 1px solid #d2d2d2;
       border-radius: 10px;
     }
   }
