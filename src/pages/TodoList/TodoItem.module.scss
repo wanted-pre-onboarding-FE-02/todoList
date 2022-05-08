@@ -64,15 +64,16 @@
   background: color.$WHITE;
   border-radius: 12px;
   @include flexbox.flexbox('between', 'center');
-  &.isHidden{
-    display:none;
+
+  &.isHidden {
+    display: none;
   }
 
   > .checkboxWrapper {
-    position : relative;
+    position: relative;
     width: 100%;
     @include flexbox.flexbox('start', 'center');
-    
+
     p {
       width: 170px;
       overflow: hidden;
@@ -80,19 +81,19 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    
+
     > .todoTooltip {
       @include position.absolute(0 13px auto auto);
+      z-index: 1;
       width: 78%;
       background-color: color.$WHITE;
       border-radius: 12px;
-      box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 0.2);
-      z-index: 1;
-      
+      box-shadow: 2px 2px 5px rgba($color: #000000, $alpha: 20%);
+
       p {
         padding: 5px 4px;
-        text-align: center;
         line-height: 20px;
+        text-align: center;
         white-space: normal;
       }
     }
