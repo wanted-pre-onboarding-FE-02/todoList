@@ -8,6 +8,8 @@
   font-size: 0;
   background-color: color.$APP_BACKGROUND;
   border-radius: 10px;
+  padding:5px 0;
+
 
   &__button {
     display: block;
@@ -16,5 +18,10 @@
     margin: 0 auto;
     font-size: 12px;
     color: color.$GRAYA;
+    &:hover{
+      color:#fff;
+      background: #b2bffc;
+      font-weight: bold;
+    }
   }
 }

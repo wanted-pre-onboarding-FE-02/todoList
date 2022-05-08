@@ -37,6 +37,7 @@ export default function TodoList({
   // 필터를 누르면 필터의 값에 따라 정렬됨 => sortedTodos
   const selectFilterHandler = (e) => {
     const filter = e.target.innerText
+    setIsModalOpen((prev) => !prev)
 
     // 날짜 오름차순
     if (filter === FILTER_LIST[0]) {
