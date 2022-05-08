@@ -13,3 +13,5 @@ export default function Modal({ children }) {
 Modal.propTypes = {
   children: PropTypes.element,
 }
+
+

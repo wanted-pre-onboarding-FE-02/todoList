@@ -3,6 +3,7 @@ import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
 import { changeYMD } from 'utils'
+
 import TodoList from 'pages/TodoList'
 import TodoHeader from 'pages/TodoHeader'
 import TodoCategory from 'pages/TodoCategory'
@@ -71,6 +72,7 @@ export default function TodoApp() {
       setIsVisible((prev) => !prev)
       return
     }
+
     const dateStr = changeYMD(date)
     setTodos((prev) => [
       {
@@ -128,20 +130,27 @@ export default function TodoApp() {
   }
 
   const handleSearchTodo = (e) => {
+
     const textFilter = e.currentTarget.value
     if (textFilter.length === 0) {
       setFilterActive(false)
       setCopyTodos(todos)
-    } else {
+    }
+
+    else {
       setFilterActive(true)
       if (/[ㄱ-힣]/.test(textFilter)) {
         const regex = createFuzzyMatcher(textFilter)
-        const resultData = todos.filter((row) => {
+        const resultData = todos.filter(row => {
           return regex.test(row.text)
         })
         setCopyTodos(resultData)
-      } else {
-        const filterResult = todos.filter((todo) => todo.text.toUpperCase().includes(textFilter.toUpperCase()))
+      }
+
+      else {
+        const filterResult = todos.filter(todo =>
+          todo.text.toUpperCase().includes(textFilter.toUpperCase())
+        )
         setCopyTodos(filterResult)
       }
     }
