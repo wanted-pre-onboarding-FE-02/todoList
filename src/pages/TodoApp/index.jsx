@@ -2,10 +2,14 @@ import { useCallback, useEffect, useState } from 'react'
 import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
+import { changeYMD } from 'utils'
+
 import TodoList from 'pages/TodoList'
 import TodoHeader from 'pages/TodoHeader'
 import TodoCategory from 'pages/TodoCategory'
-import Modal from '../../components/Modal'
+import TodoDate from 'pages/TodoDate'
+import TodoInput from 'pages/TodoInput'
+import useTodoDate from 'hooks/useTodoDate'
 import { createFuzzyMatcher } from 'utils/createFuzzyMatcher'
 
 export default function TodoApp() {
@@ -19,6 +23,23 @@ export default function TodoApp() {
   const [category, setCategory] = useState('work')
   const [todoCategory, setTodoCategory] = useState('')
   const [todoIsLike, setTodoIsLike] = useState(false)
+  const [date, setDateFunObj] = useTodoDate()
+
+  // 중요표시 할일 상단고정
+  useEffect(() => {
+    setTodos((prev) => {
+      const fixedTodos = prev.filter((ele) => ele.isLike === true)
+      const remainTodos = prev.filter((ele) => ele.isLike === false)
+      return fixedTodos.concat(remainTodos)
+    })
+  }, [text])
+
+  useEffect(() => {
+    const dateStr = changeYMD(date)
+    setTodos((todos) =>
+      todos.map((todo) => (todo.dateStr === dateStr ? { ...todo, invisible: false } : { ...todo, invisible: true }))
+    )
+  }, [date])
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
@@ -52,11 +73,12 @@ export default function TodoApp() {
       return
     }
 
+    const dateStr = changeYMD(date)
     setTodos((prev) => [
       {
         id: Date.now(),
         text: text.trim(),
-        date: '2020-05-05',
+        dateStr,
         category,
         done: false,
         isLike: todoIsLike,
@@ -68,10 +90,11 @@ export default function TodoApp() {
       {
         id: Date.now(),
         text: text.trim(),
-        date: '2020-05-05',
-        category: 'green',
+        dateStr,
+        category,
         done: false,
         isLike: todoIsLike,
+        invisible: false,
       },
       ...prev,
     ])
@@ -94,10 +117,6 @@ export default function TodoApp() {
   }
 
   const handleEditTodo = () => {
-    // if (text.trim() === '') {
-    //   return
-    // }
-
     setTodos((todos) =>
       todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike: todoIsLike } : todo))
     )
@@ -109,12 +128,6 @@ export default function TodoApp() {
   const handleLike = () => {
     setTodoIsLike((prev) => !prev)
   }
-
-  // 중요표시 할일 상단고정
-  useEffect(() => {
-    const fixedTasks = todos.filter((element) => element.isLike === true)
-    setTodos(fixedTasks.concat(todos.filter((element) => element.isLike === false)))
-  }, [text])
 
   const handleSearchTodo = (e) => {
 
@@ -156,12 +169,13 @@ export default function TodoApp() {
     }
   }
 
+  const { handleCalChange } = setDateFunObj
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
         <TodoHeader handleSearchTodo={handleSearchTodo} />
         <TodoCategory handleCategory={handleCategory} todos={todos} />
-
+        <TodoDate date={date} {...setDateFunObj} />
         <TodoList
           todoIsLike={todoIsLike}
           isFilterActive={filterActive}
@@ -183,15 +197,15 @@ export default function TodoApp() {
         )}
       </div>
       {isVisible && (
-        <Modal
+        <TodoInput
+          text={text}
+          date={date}
+          todoCategory={todoCategory}
           todoIsLike={todoIsLike}
           handleLike={handleLike}
-          text={text}
-          // isLike={isLike}
-          // setIsLike={setIsLike}
-          todoCategory={todoCategory}
           handleChangeText={handleChangeText}
           handleModal={handleModal}
+          handleCalChange={handleCalChange}
           handleSaveCategory={handleSaveCategory}
         />
       )}
