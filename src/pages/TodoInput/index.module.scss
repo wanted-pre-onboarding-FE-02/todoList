@@ -55,7 +55,8 @@
   }
 
   .pin {
-    @include position.absolute(0 80px 80px auto);
+      @include position.absolute(300px 0 100px 80px);
+      height: 16px;
   }
 }
 
