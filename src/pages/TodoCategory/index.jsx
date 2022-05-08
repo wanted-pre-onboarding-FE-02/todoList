@@ -1,15 +1,67 @@
 import styles from './TodoCategory.module.scss'
+import PropTypes from 'prop-types'
+import ScrollContainer from 'react-indiana-drag-scroll'
+import { cx } from 'styles'
 
-const CATEGORY = ['work', 'exercise', 'study']
-export default function TodoCategory() {
+export const CATEGORY = ['all', 'work', 'exercise', 'study', 'promise', 'etc']
+
+// eslint-disable-next-line react/prop-types
+export default function TodoCategory({ handleCategory, todos }) {
+  const handleCompleted = (category) => {
+    if (category === 'all') {
+      const allTodo = todos.filter((item) => item.done === true)
+      return allTodo.length
+    }
+    const completedTodo = todos.filter((item) => item.done === true && item.category === category)
+    return completedTodo.length
+  }
+
+  const handleCategoryTasksCount = (category) => {
+    if (category === 'all') {
+      return todos.length
+    }
+    const categoryTasks = todos.filter((item) => item.category === category)
+    return categoryTasks.length
+  }
+
   return (
-    <section>
+    <section className={styles.categoryWraper}>
       <h3>category</h3>
-      <ul className={styles.categoryInner}>
-        {CATEGORY.map((cate) => {
-          return <li key={`category-${cate}`}>{cate}</li>
-        })}
-      </ul>
+      <ScrollContainer className={styles.scrollContainer}>
+        <ul className={styles.categoryInner}>
+          {CATEGORY.map((item) => {
+            return (
+              <li key={item}>
+                <button type='button' onClick={handleCategory} value={item}>
+                  <span>{handleCategoryTasksCount(item)}Tasks</span>
+                  <h4>{item}</h4>
+                  <div className={cx(styles[item])}>
+                    <p
+                      style={{
+                        width:
+                          handleCategoryTasksCount(item) !== 0 ? `calc(100% / ${handleCategoryTasksCount(item)} * ${handleCompleted(item)} )` : `calc(0%)`,
+                      }}
+                    />
+                  </div>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </ScrollContainer>
     </section>
   )
+}
+
+TodoCategory.propTypes = {
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string,
+      date: PropTypes.string,
+      category: PropTypes.string,
+      done: PropTypes.bool,
+      isLike: PropTypes.bool,
+    })
+  ),
 }

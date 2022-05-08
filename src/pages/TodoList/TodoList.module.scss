@@ -4,9 +4,24 @@
 @use '../../styles/mixins/animation';
 @use '../../styles/constants/levels' as idx;
 
+.todoList {
+  position: relative;
+}
+
 .todoInner {
-  max-height: 250px;
+  height: 250px;
   overflow: scroll;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__icon {
+    width: 20px;
+    fill: color.$TASKS_TITLE;
+  }
 }
 
 // .todoList {

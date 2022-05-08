@@ -4,8 +4,8 @@ import styles from './Routes.module.scss'
 function App() {
   return (
     <div className={styles.app}>
-      <div id='modal' />
       <TodoApp />
+      <div id='modal' />
     </div>
   )
 }
