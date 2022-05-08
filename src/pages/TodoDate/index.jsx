@@ -11,7 +11,7 @@ import useOnClickOutside from 'hooks/useOnClickOutside'
 export default function TodoDate({ date, handlePrevClick, handleNextClick, handleCalChange }) {
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef()
-  useOnClickOutside(ref, () => setIsVisible(false))
+  // useOnClickOutside(ref, () => setIsVisible(false))
 
   const handleContentClick = () => setIsVisible((prev) => !prev)
   const handleChange = (val) => {

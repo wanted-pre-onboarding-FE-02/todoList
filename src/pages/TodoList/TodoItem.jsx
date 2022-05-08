@@ -20,11 +20,6 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
     handleEditMode(e, todo)
   }
 
-  const handleIsLikeSave = (e) => {
-    handleToggle(e)
-    handleToggleLike(e, todo)
-  }
-
   return (
     <li className={cx(styles.todoElement, { [styles.isHidden]: invisible })} key={`todo-${id}`}>
       <div
@@ -32,7 +27,7 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
         onMouseEnter={handleTodoItemMouseEnter}
         onMouseLeave={handleTodoItemMouseLeave}
       >
-        <input type='checkbox' checked={done} data-id={id} onChange={handleIsLikeSave} />
+        <input type='checkbox' checked={done} data-id={id} onChange={handleToggle} />
         <CheckIcon />
         {isLike ? '📌' : ''}
         <p ref={itemTextRef}>{text}</p>

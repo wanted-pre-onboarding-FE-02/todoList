@@ -23,3 +23,11 @@ export const changeYMD = (paramDate) => {
   const ymd = yy + mm + dd
   return ymd
 }
+
+export const compareDate = (target1, target2) => {
+  return (
+    target1.getFullYear() === target2.getFullYear() &&
+    target1.getMonth() === target2.getMonth() &&
+    target1.getDate() === target2.getDate()
+  )
+}

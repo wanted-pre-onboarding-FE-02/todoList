@@ -1,49 +1,58 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './TodoApp.module.scss'
 import { INITIAL_TODO } from 'assets/Variables'
 import { PlusIcon } from 'assets/svgs/index'
-import { changeYMD } from 'utils'
+import { compareDate } from 'utils'
 
+import useTodos from 'hooks/useTodos'
+import useTodoDate from 'hooks/useTodoDate'
 import TodoList from 'pages/TodoList'
 import TodoHeader from 'pages/TodoHeader'
 import TodoCategory from 'pages/TodoCategory'
 import TodoDate from 'pages/TodoDate'
-import TodoInput from 'pages/TodoInput'
-import useTodoDate from 'hooks/useTodoDate'
+import TodoUpdate from 'pages/TodoUpdate'
+import TodoCreate from 'pages/TodoCreate'
 
 export default function TodoApp() {
-  const [todos, setTodos] = useState([...INITIAL_TODO])
-  const [copyTodos, setCopyTodos] = useState(todos)
-  const [filterActive, setFilterActive] = useState(false)
-  const [text, setText] = useState('')
-  const [isVisible, setIsVisible] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
-  const [selected, setSelected] = useState(0)
+  const {
+    todos,
+    copyTodos,
+    setTodos,
+    setTodoToUpdate,
+    setEditedObj,
+    handleToggle,
+    handleRemove,
+    handleAddTodo,
+    handleUpdateTodo,
+  } = useTodos()
+  const { date, ...handleDate } = useTodoDate()
   const [category, setCategory] = useState('work')
-  const [todoCategory, setTodoCategory] = useState('')
-  const [todoIsLike, setTodoIsLike] = useState(false)
-  const [date, setDateFunObj] = useTodoDate()
 
-  // 중요표시 할일 상단고정
+  const [filterActive, setFilterActive] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [isCreate, setIsCreate] = useState(false)
+  const [isUpdate, setIsUpdate] = useState(false)
+
   useEffect(() => {
+    setTodos((todos) =>
+      todos.map((todo) => (compareDate(todo.date, date) ? { ...todo, invisible: false } : { ...todo, invisible: true }))
+    )
+
     setTodos((prev) => {
       const fixedTodos = prev.filter((ele) => ele.isLike === true)
       const remainTodos = prev.filter((ele) => ele.isLike === false)
       return fixedTodos.concat(remainTodos)
     })
-  }, [text])
-
-  useEffect(() => {
-    const dateStr = changeYMD(date)
-    setTodos((todos) =>
-      todos.map((todo) => (todo.dateStr === dateStr ? { ...todo, invisible: false } : { ...todo, invisible: true }))
-    )
   }, [date])
 
   const handleToggle = (e) => {
     const CHECK_ID = parseInt(e.target.dataset.id, 10)
-    setTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
-    setCopyTodos((todos) => todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done } : todo)))
+    setTodos((todos) =>
+      todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done, isLike: false } : todo))
+    )
+    setCopyTodos((todos) =>
+      todos.map((todo) => (todo.id === CHECK_ID ? { ...todo, done: !todo.done, isLike: false } : todo))
+    )
   }
 
   const handleRemove = (e) => {
@@ -52,80 +61,55 @@ export default function TodoApp() {
     setCopyTodos((todos) => todos.filter((todo) => todo.id !== DELETE_ID))
   }
 
-  const handleChangeText = (e) => {
-    setText(e.currentTarget.value)
-  }
-
   const handleModal = () => {
-    setIsVisible((prev) => !prev)
-    setText('')
     if (isEditing) setIsEditing((prev) => !prev)
+    if (isUpdate) setIsUpdate(false)
+    if (isCreate) setIsUpdate(false)
   }
 
-  const handleSaveCategory = (category) => {
-    setCategory(category)
-  }
+  const handleSaveCategory = (category) => setCategory(category)
 
-  const handleAddTodo = useCallback(() => {
-    if (text.trim() === '') {
-      setIsVisible((prev) => !prev)
+  const handleAddTodo = () => {
+    if (!editedObj) {
+      setIsCreate(true)
       return
     }
 
-    const dateStr = changeYMD(date)
     setTodos((prev) => [
       {
         id: Date.now(),
-        text: text.trim(),
-        dateStr,
-        category,
         done: false,
-        isLike: todoIsLike,
         invisible: false,
+        ...editedObj,
       },
       ...prev,
     ])
+
     setCopyTodos((prev) => [
       {
         id: Date.now(),
-        text: text.trim(),
-        dateStr,
-        category,
         done: false,
-        isLike: todoIsLike,
         invisible: false,
+        ...editedObj,
       },
       ...prev,
     ])
-    setText('')
-    setIsVisible((prev) => !prev)
-  }, [category, text, todoIsLike])
+
+    setIsEditing(false)
+    setIsCreate(false)
+    setEditedObj(null)
+  }
+
+  const handleUpdateTodo = () => {
+    setTodos((todos) => todos.map((todo) => (todo.id === todoToUpdate.id ? { ...todo, ...editedObj } : todo)))
+    setIsUpdate(false)
+    setIsEditing(false)
+  }
 
   const handleEditMode = (e, todo) => {
-    setTodoCategory(todo.category)
     setIsEditing((prev) => !prev)
-    const EDIT_ID = parseInt(e.target.dataset.id, 10)
-    setSelected(EDIT_ID)
-    setIsVisible((prev) => !prev)
-    const newText = todos.find((element) => element.id === EDIT_ID).text
-    setText(newText)
-  }
-
-  const handleToggleLike = (e, todo) => {
-    setTodoIsLike(todo.isLike)
-  }
-
-  const handleEditTodo = () => {
-    setTodos((todos) =>
-      todos.map((todo) => (todo.id === selected ? { ...todo, text, category, isLike: todoIsLike } : todo))
-    )
-    setIsEditing(false)
-    setIsVisible((prev) => !prev)
-    setText('')
-  }
-
-  const handleLike = () => {
-    setTodoIsLike((prev) => !prev)
+    setIsUpdate(true)
+    setTodoToUpdate(todo)
   }
 
   const handleSearchTodo = (e) => {
@@ -155,25 +139,23 @@ export default function TodoApp() {
     }
   }
 
-  const { handleCalChange } = setDateFunObj
+  const { handleCalChange } = handleDate
   return (
     <div className={styles.todoWrapper}>
       <div className={styles.todoContent}>
         <TodoHeader handleSearchTodo={handleSearchTodo} />
         <TodoCategory handleCategory={handleCategory} todos={todos} />
-        <TodoDate date={date} {...setDateFunObj} />
+        <TodoDate date={date} {...handleDate} />
         <TodoList
-          todoIsLike={todoIsLike}
           isFilterActive={filterActive}
           todos={todos}
           copyTodos={copyTodos}
           handleToggle={handleToggle}
-          handleToggleLike={handleToggleLike}
           handleEditMode={handleEditMode}
           handleRemove={handleRemove}
         />
         {isEditing ? (
-          <button type='button' className={styles.todoAddBtn} aria-label='Edit Todo Button' onClick={handleEditTodo}>
+          <button type='button' className={styles.todoAddBtn} aria-label='Edit Todo Button' onClick={handleUpdateTodo}>
             ✏️
           </button>
         ) : (
@@ -182,14 +164,20 @@ export default function TodoApp() {
           </button>
         )}
       </div>
-      {isVisible && (
-        <TodoInput
-          text={text}
-          date={date}
-          todoCategory={todoCategory}
-          todoIsLike={todoIsLike}
-          handleLike={handleLike}
-          handleChangeText={handleChangeText}
+      {isUpdate && (
+        <TodoUpdate
+          todo={todoToUpdate}
+          setEditedObj={setEditedObj}
+          handleModal={handleModal}
+          handleCalChange={handleCalChange}
+          handleSaveCategory={handleSaveCategory}
+        />
+      )}
+      {isCreate && (
+        <TodoCreate
+          propsCategory={category}
+          propDate={date}
+          setEditedObj={setEditedObj}
           handleModal={handleModal}
           handleCalChange={handleCalChange}
           handleSaveCategory={handleSaveCategory}

@@ -50,7 +50,7 @@ TodoCategory.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       text: PropTypes.string,
-      date: PropTypes.string,
+      date: PropTypes.instanceOf(Date),
       category: PropTypes.string,
       done: PropTypes.bool,
       isLike: PropTypes.bool,

@@ -14,13 +14,13 @@ import SelectBar from 'pages/TodoCategory/SelectBar'
 export default function TodoInput({
   text,
   date,
-  todoCategory,
-  todoIsLike,
-  handleLike,
+  category,
+  isLike,
   handleChangeText,
+  handleLike,
   handleModal,
-  handleCalChange,
-  handleSaveCategory,
+  handleChangeDateProp,
+  handleChangeCategoryProp,
 }) {
   const ref = useRef()
   const [isCalendar, setIsCalendar] = useState(false)
@@ -32,18 +32,19 @@ export default function TodoInput({
 
   const handleContentClick = () => setIsCalendar((prev) => !prev)
   const handleChangeDate = (val) => {
-    handleCalChange(val)
+    handleChangeDateProp(val)
     setIsCalendar(false)
   }
+
   return (
     <Portal>
       <div className={styles.wrapper}>
-        <SelectBar handleSaveCategory={handleSaveCategory} todoCategory={todoCategory} />
+        <SelectBar handleSaveCategory={handleChangeCategoryProp} todoCategory={category} />
         <button type='button' className={styles.closeBtn} onClick={handleModal}>
           X
         </button>
         <button type='button' className={styles.pin} onClick={handleLike}>
-          {todoIsLike ? <PinFixedIcon /> : <PinIcon />}
+          {isLike ? <PinFixedIcon /> : <PinIcon />}
         </button>
         <div className={styles.formWrapper}>
           <button type='button' className={styles.date} onClick={handleContentClick}>
@@ -66,11 +67,11 @@ export default function TodoInput({
 TodoInput.propTypes = {
   text: PropTypes.string,
   date: PropTypes.instanceOf(Date),
-  todoIsLike: PropTypes.bool,
-  todoCategory: PropTypes.string,
+  category: PropTypes.string,
+  isLike: PropTypes.bool,
   handleLike: PropTypes.func,
-  handleSaveCategory: PropTypes.func,
   handleChangeText: PropTypes.func,
   handleModal: PropTypes.func,
-  handleCalChange: PropTypes.func,
+  handleChangeDateProp: PropTypes.func,
+  handleChangeCategoryProp: PropTypes.func,
 }

@@ -23,7 +23,7 @@ const useTodoDate = () => {
       }),
     []
   )
-  return [date, { handlePrevClick, handleNextClick, handleCalChange }]
+  return { date, handlePrevClick, handleNextClick, handleCalChange }
 }
 
 export default useTodoDate

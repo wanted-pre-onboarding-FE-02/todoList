@@ -18,7 +18,6 @@ export default function TodoList({
   handleToggle,
   handleEditMode,
   handleRemove,
-  todoIsLike,
   handleToggleLike,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -84,7 +83,6 @@ export default function TodoList({
               ) => (
                 <TodoItem
                   handleToggleLike={handleToggleLike}
-                  todoIsLike={todoIsLike}
                   todo={todo}
                   key={`todo-${todo.id}`}
                   handleToggle={handleToggle}
@@ -99,7 +97,6 @@ export default function TodoList({
               ) => (
                 <TodoItem
                   handleToggleLike={handleToggleLike}
-                  todoIsLike={todoIsLike}
                   todo={todo}
                   key={`todo-${todo.id}`}
                   handleToggle={handleToggle}
@@ -119,7 +116,7 @@ TodoList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       text: PropTypes.string,
-      date: PropTypes.string,
+      date: PropTypes.instanceOf(Date),
       category: PropTypes.string,
       done: PropTypes.bool,
       isLike: PropTypes.bool,
@@ -129,14 +126,13 @@ TodoList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       text: PropTypes.string,
-      date: PropTypes.string,
+      date: PropTypes.instanceOf(Date),
       category: PropTypes.string,
       done: PropTypes.bool,
       isLike: PropTypes.bool,
     })
   ),
   handleToggleLike: PropTypes.func,
-  todoIsLike: PropTypes.bool,
   handleToggle: PropTypes.func,
   handleEditMode: PropTypes.func,
   handleRemove: PropTypes.func,
