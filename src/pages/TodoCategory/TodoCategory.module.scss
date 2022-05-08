@@ -58,31 +58,31 @@
 
         &.work {
           p {
-            background-color: #4e22f0;
+            background-color: colors.$WORK;
           }
         }
 
         &.exercise {
           p {
-            background-color: #24d6a1;
+            background-color: colors.$EXERCISE;
           }
         }
 
         &.study {
           p {
-            background-color: #76e940;
+            background-color: colors.$STUDY;
           }
         }
 
         &.promise {
           p {
-            background-color: #651ea8;
+            background-color: colors.$PROMISE;
           }
         }
 
         &.etc {
           p {
-            background-color: #cc2923;
+            background-color: colors.$ETC;
           }
         }
 

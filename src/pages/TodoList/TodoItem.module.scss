@@ -119,6 +119,56 @@
     border-radius: 50%;
     outline: 2px solid color.$PURPLE;
 
+    &.work {
+      outline: 2px solid color.$WORK;
+
+      &:checked {
+        background: color.$APP_BACKGROUND;
+        border: none;
+        outline: 2px solid color.$APP_BACKGROUND;
+      }
+    }
+
+    &.exercise {
+      outline: 2px solid color.$EXERCISE;
+
+      &:checked {
+        background: color.$APP_BACKGROUND;
+        border: none;
+        outline: 2px solid color.$APP_BACKGROUND;
+      }
+    }
+
+    &.study {
+      outline: 2px solid color.$STUDY;
+
+      &:checked {
+        background: color.$APP_BACKGROUND;
+        border: none;
+        outline: 2px solid color.$APP_BACKGROUND;
+      }
+    }
+
+    &.promise {
+      outline: 2px solid color.$PROMISE;
+
+      &:checked {
+        background: color.$APP_BACKGROUND;
+        border: none;
+        outline: 2px solid color.$APP_BACKGROUND;
+      }
+    }
+
+    &.etc {
+      outline: 2px solid color.$ETC;
+
+      &:checked {
+        background: color.$APP_BACKGROUND;
+        border: none;
+        outline: 2px solid color.$APP_BACKGROUND;
+      }
+    }
+
     &:checked {
       background: color.$APP_BACKGROUND;
       border: none;
