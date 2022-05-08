@@ -7,7 +7,7 @@ import { cx } from '../../styles/index'
 export default function TodoItem({ todo, handleToggle, handleRemove, handleEditMode, handleToggleLike }) {
   const [hoverItem, setHoverItem] = useState(false)
   const itemTextRef = useRef()
-  const { id, text, done, invisible, isLike } = todo
+  const { id, text, done, invisible, isLike, category } = todo
 
   const handleTodoItemMouseEnter = () => {
     if (itemTextRef.current.scrollWidth > itemTextRef.current.offsetWidth) setHoverItem(true)
@@ -32,7 +32,13 @@ export default function TodoItem({ todo, handleToggle, handleRemove, handleEditM
         onMouseEnter={handleTodoItemMouseEnter}
         onMouseLeave={handleTodoItemMouseLeave}
       >
-        <input type='checkbox' checked={done} data-id={id} onChange={handleIsLikeSave} />
+        <input
+          type='checkbox'
+          className={cx(styles[category])}
+          checked={done}
+          data-id={id}
+          onChange={handleIsLikeSave}
+        />
         <CheckIcon />
         {isLike ? '📌' : ''}
         <p ref={itemTextRef}>{text}</p>
@@ -59,7 +65,7 @@ TodoItem.propTypes = {
     done: PropTypes.bool,
     invisible: PropTypes.bool,
     // date: PropTypes.string.isRequired,
-    // category: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
     isLike: PropTypes.bool,
   }),
   handleToggleLike: PropTypes.func,
